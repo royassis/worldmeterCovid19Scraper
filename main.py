@@ -20,12 +20,12 @@ browser = webdriver.Chrome(executable_path=r"C:\Users\roy\Desktop\chromedriver.e
 url = 'https://web.archive.org/web/20200101000000*/https://www.worldometers.info/coronavirus/'
 browser.get(url)
 
-timeout = 20
-try:
-    WebDriverWait(browser, timeout).until(EC.visibility_of_element_located((By.XPATH, "//img[@class=’avatar width-full rounded-2']")))
-except TimeoutException:
-    print("Timed out waiting for page to load")
-    browser.quit()
+# timeout = 20
+# try:
+#     WebDriverWait(browser, timeout).until(EC.visibility_of_element_located((By.XPATH, "//img[@class=’avatar width-full rounded-2']")))
+# except TimeoutException:
+#     print("Timed out waiting for page to load")
+#     browser.quit()
 
 elems = browser.find_elements_by_xpath("//a[@href]")
 refs = []
@@ -37,15 +37,21 @@ for elem in elems:
 
         refs.append(match.group())
 
+errors=[]
 data_dir = 'data'
 for ref in refs:
     try:
         data = pd.read_html(ref)
         date = "-".join(data[1][1].to_list())
-        df = data[2]
+        df = data[-1]
 
         outfile = date+'.csv'
         outpath = os.path.join(data_dir, outfile)
         df.to_csv(outpath)
     except:
-        pass
+        errors.append(ref)
+
+# Write erros to file
+errors = "\n".join(errors)
+with open('errors.txt', 'w') as filehandle:
+    filehandle.writelines(errors)
