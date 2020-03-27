@@ -1,4 +1,5 @@
 import pandas as pd
+import os.path
 import re
 
 from selenium import webdriver
@@ -9,7 +10,6 @@ from selenium.common.exceptions import TimeoutException
 
 pd.set_option('display.max_columns', None)
 pd.set_option('display.max_rows', None)
-
 
 
 option = webdriver.ChromeOptions()
@@ -34,9 +34,18 @@ for elem in elems:
     pat = r'https://web.archive.org/web/\d+/https://www.worldometers.info/coronavirus/'
     match = re.search(pat,ref)
     if match:
+
         refs.append(match.group())
 
-
+data_dir = 'data'
 for ref in refs:
-    data = pd.read_html(ref)
-    df = data[2]
+    try:
+        data = pd.read_html(ref)
+        date = "-".join(data[1][1].to_list())
+        df = data[2]
+
+        outfile = date+'.csv'
+        outpath = os.path.join(data_dir, outfile)
+        df.to_csv(outpath)
+    except:
+        pass
