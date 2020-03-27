@@ -28,6 +28,8 @@ browser.get(url)
 #     print("Timed out waiting for page to load")
 #     browser.quit()
 
+
+# Read all hrefs from html script
 elems = browser.find_elements_by_xpath("//a[@href]")
 refs = []
 for elem in elems:
@@ -38,10 +40,16 @@ for elem in elems:
 
         refs.append(match.group())
 
+# Iterate over hrefs and download tables from site
 errors=[]
 data_dir = 'data'
 start = timer()
-for ref in refs:
+
+for i,ref in enumerate(refs):
+
+    print(f"this is iteration {i+1} from {len(refs)}, "
+          f"elapsed time in seconds is: {timer()-start}")
+
     try:
         data = pd.read_html(ref)
         date = "-".join(data[1][1].to_list())
@@ -52,6 +60,7 @@ for ref in refs:
         df.to_csv(outpath)
     except:
         errors.append(ref)
+
 end = timer()
 
 # Write erros to file
