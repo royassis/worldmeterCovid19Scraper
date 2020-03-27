@@ -54,6 +54,8 @@ for i,ref in enumerate(refs):
         data = pd.read_html(ref)
         date = "-".join(data[1][1].to_list())
         df = data[-1]
+        df['ref'] = ref
+        df['date'] = re.search("\d+",ref).group()
 
         outfile = date+'.csv'
         outpath = os.path.join(data_dir, outfile)
@@ -69,3 +71,19 @@ with open('errors.txt', 'w') as filehandle:
     filehandle.writelines(f"errors:\n {errors}\n")
     filehandle.writelines('\n---------------------\n')
     filehandle.writelines(f"time elapsed in seconds: {end-start}")
+
+
+
+
+import glob
+
+path = r'data'
+all_files = glob.glob(path + "/*.csv")
+
+li = []
+
+for filename in all_files:
+    df = pd.read_csv(filename, index_col=None, header=0)
+    li.append(df)
+
+frame = pd.concat(li, axis=0, ignore_index=True)
