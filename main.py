@@ -1,6 +1,7 @@
 import pandas as pd
 import os.path
 import re
+from timeit import default_timer as timer
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -39,6 +40,7 @@ for elem in elems:
 
 errors=[]
 data_dir = 'data'
+start = timer()
 for ref in refs:
     try:
         data = pd.read_html(ref)
@@ -50,8 +52,11 @@ for ref in refs:
         df.to_csv(outpath)
     except:
         errors.append(ref)
+end = timer()
 
 # Write erros to file
 errors = "\n".join(errors)
 with open('errors.txt', 'w') as filehandle:
-    filehandle.writelines(errors)
+    filehandle.writelines(f"errors:\n {errors}\n")
+    filehandle.writelines('\n---------------------\n')
+    filehandle.writelines(f"time elapsed in seconds: {end-start}")
