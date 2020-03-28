@@ -27,7 +27,9 @@ browser.get(url)
 # except TimeoutException:
 #     print("Timed out waiting for page to load")
 #     browser.quit()
-
+prev_refs = []
+with open('refs.txt', 'r') as filehandle:
+    prev_refs.append(filehandle.readline())
 
 # Read all hrefs from html script
 elems = browser.find_elements_by_xpath("//a[@href]")
@@ -40,12 +42,15 @@ for elem in elems:
 
         refs.append(match.group())
 
+
+new_refs =  set(refs) - set(prev_refs)
+
 # Iterate over hrefs and download tables from site
 errors=[]
 data_dir = 'data'
 start = timer()
 
-for i,ref in enumerate(refs):
+for i,ref in enumerate(new_refs):
 
     print(f"this is iteration {i+1} from {len(refs)}, "
           f"elapsed time in seconds is: {timer()-start}")
@@ -73,19 +78,3 @@ with open('errors.txt', 'w') as filehandle:
     filehandle.writelines(f"time elapsed in seconds: {end-start}")
 
 
-
-
-import glob
-
-path = r'data'
-all_files = glob.glob(path + "/*.csv")
-
-li = []
-
-for filename in all_files:
-    df = pd.read_csv(filename, index_col=[0], header=0)
-    df = df.iloc[:,1:]
-    li.append(df)
-
-[df.shape for df in li]
-frame = pd.concat(li[:-10], axis=0, ignore_index=True,sort=True)
