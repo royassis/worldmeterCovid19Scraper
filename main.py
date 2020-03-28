@@ -36,7 +36,7 @@ except TimeoutException:
     browser.quit()
 
 # The links that allready been downloaded are saved here, and should be exluded in this search
-refs_handle = 'refs.txt'
+refs_handle = r'resources\refs.txt'
 prev_refs = [line.rstrip('\n') for line in open(refs_handle)]
 
 # Read all hrefs from html script
@@ -89,9 +89,9 @@ with open(outpath, 'w+') as filehandle:
     filehandle.writelines('\n---------------------\n')
 
 # Update refs files
-outfile = 'refs.txt'
+outpath = r'resources\refs.txt'
 new_refs = "\n".join(new_refs)
-with open(outfile, 'a') as filehandle:
+with open(outpath, 'a') as filehandle:
     filehandle.write(new_refs)
 
 
