@@ -1,11 +1,17 @@
 import os
 import pandas as pd
-
 from selenium import webdriver
+
+pd.set_option('display.max_columns', 500)
+pd.set_option('display.width', 1000)
 
 resource_dir = 'resources'
 data_dir = 'data'
 log_dir = 'logs'
+
+chromedriver_path=r"C:\Users\roy\Desktop\chromedriver.exe"
+option = webdriver.ChromeOptions()
+option.add_argument('— incognito')
 
 refs_handle = os.path.join(resource_dir,'refs.txt')
 
@@ -19,8 +25,5 @@ wayback_machine_corona_url = urls.loc[1,'url']
 url_pattern = urls.loc[2,'url']
 
 
-chromedriver_path=r"C:\Users\roy\Desktop\chromedriver.exe"
 
-# adding the incognito argument to our webdriver
-option = webdriver.ChromeOptions()
-option.add_argument('— incognito')
+

@@ -1,24 +1,16 @@
-import pandas as pd
+from settings import *
 import glob
 import re
 import pprint
 import datetime
 
-pd.set_option('display.max_columns', 500)
-pd.set_option('display.width', 1000)
 
 pp = pprint.PrettyPrinter(indent=4)
 
-mapper_path = r'D:\PycharmProjects\scrap_corona_history\resources\column_remapper2.csv'
-mapper = pd.read_csv(mapper_path, index_col = 'key', usecols = ['key','value'])
-mapper = mapper.iloc[:,0]
-
-conversion_dict= mapper.to_dict()
-
+conversion_dict= column_remapper.to_dict()
 
 # Iterate and read csv files into df
-path = r'data'
-all_files = glob.glob(path + "/*.csv")
+all_files = glob.glob(data_dir + "/*.csv")
 li = []
 for filename in all_files:
     df = pd.read_csv(filename, index_col=[0], header=0)
