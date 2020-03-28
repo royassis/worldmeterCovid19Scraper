@@ -8,7 +8,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 
 
-def write_log(errors, delta, log_dir):
+def log_errors_and_runtime(errors, delta, log_dir):
 
     errors = "\n".join(errors)
     date_str = date.today().strftime("%d%m%Y")
@@ -22,15 +22,14 @@ def write_log(errors, delta, log_dir):
         filehandle.writelines('\n---------------------\n')
 
 
-def update_ref_log(outpath,new_refs):
+def update_ref_log(hrefs,new_refs, hrefs_path):
 
-    new_refs = "\n".join(new_refs)
-    with open(outpath, 'a') as filehandle:
-        filehandle.write("\n")
-        filehandle.write(new_refs)
+    new_refs = pd.DataFrame([[new_refs,""]], columns=["href","date"])
+    hrefs = pd.concat([hrefs,new_refs],axis = 0, ignore_index=True)
+    hrefs.to_csv(hrefs_path)
 
 
-def handle_timeout(browser, timeout = 50):
+def timeout_get_request(browser, timeout = 50):
 
     try:
         WebDriverWait(browser, timeout).until(EC.visibility_of_element_located((By.XPATH, "//div[@class='search-toolbar-logo']")))
@@ -39,13 +38,15 @@ def handle_timeout(browser, timeout = 50):
         browser.quit()
 
 
-def iterate_over_hrefs_and_write_to_file(new_refs):
+def verbose(i, arrsize):
+    print(f'this is iteration number:{i + 1} from {arrsize}')
+
+def download_csv_from_all_links(new_refs):
 
     errors = []
     for i, ref in enumerate(new_refs):
 
-        # print(f"this is iteration {i + 1} from {len(refs)}, "
-        #       f"elapsed time in seconds is: {timer() - start}")
+        verbose(i, len(new_refs))
         try:
             container = pd.read_html(ref)
             date = "-".join(container[1][1].to_list())
@@ -62,7 +63,7 @@ def iterate_over_hrefs_and_write_to_file(new_refs):
     return errors
 
 
-def get_new_refs(browser, prev_refs,url_pattern):
+def get_fresh_urls(browser, prev_refs, url_pattern):
 
     # Read all hrefs from html script
     refs = []

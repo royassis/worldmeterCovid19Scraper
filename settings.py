@@ -13,7 +13,8 @@ chromedriver_path=r"C:\Users\roy\Desktop\chromedriver.exe"
 option = webdriver.ChromeOptions()
 option.add_argument('— incognito')
 
-refs_handle = os.path.join(resource_dir,'refs.txt')
+hrefs_path = os.path.join(resource_dir, 'refs.csv')
+hrefs = pd.read_csv(hrefs_path, index_col ='id')
 
 mapper_path = os.path.join(resource_dir, 'column_remapper.csv')
 mapper = pd.read_csv(mapper_path, index_col = 'key', usecols = ['key','value'])
@@ -23,7 +24,6 @@ urls_path = os.path.join(resource_dir, 'urls.csv')
 urls = pd.read_csv(urls_path, index_col = 'id')
 wayback_machine_corona_url = urls.loc[1,'url']
 url_pattern = urls.loc[2,'url']
-
 
 
 
