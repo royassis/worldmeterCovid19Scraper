@@ -5,6 +5,7 @@ from selenium import webdriver
 
 resource_dir = 'resources'
 data_dir = 'data'
+log_dir = 'logs'
 
 refs_handle = os.path.join(resource_dir,'refs.txt')
 

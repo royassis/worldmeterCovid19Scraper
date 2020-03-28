@@ -1,7 +1,7 @@
 import re
-from datetime import date
+
 from timeit import default_timer as timer
-from settings import *
+from functions import *
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -67,22 +67,8 @@ end = timer()
 
 
 # Write log to file
-log_dir = 'logs'
-errors = "\n".join(errors)
-date_str = date.today().strftime("%d%m%Y")
-outfile = date_str+'.txt'
-outpath = os.path.join(log_dir,outfile)
-with open(outpath, 'w+') as filehandle:
-    filehandle.writelines(f"errors:{errors}")
-    filehandle.writelines('\n---------------------\n')
-    filehandle.writelines(f"time elapsed in seconds: {end-start}")
-    filehandle.writelines('\n---------------------\n')
+write_log(errors,new_refs, start ,end)
 
-# Update refs files
-outpath = r'resources\refs.txt'
-new_refs = "\n".join(new_refs)
-with open(outpath, 'a') as filehandle:
-    filehandle.write(new_refs)
 
 
 
