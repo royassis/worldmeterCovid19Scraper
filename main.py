@@ -34,9 +34,8 @@ except TimeoutException:
     browser.quit()
 
 # The links that allready been downloaded are saved here, and should be exluded in this search
-prev_refs = []
-with open('refs.txt', 'r') as filehandle:
-    prev_refs.append(filehandle.readline())
+refs_handle = 'refs.txt'
+prev_refs = [line.rstrip('\n') for line in open(refs_handle)]
 
 # Read all hrefs from html script
 elems = browser.find_elements_by_xpath("//a[@href]")
@@ -46,7 +45,6 @@ for elem in elems:
     pat = r'https://web.archive.org/web/\d+/https://www.worldometers.info/coronavirus/'
     match = re.search(pat,ref)
     if match:
-
         refs.append(match.group())
 
 new_refs =  set(refs) - set(prev_refs)
@@ -89,7 +87,6 @@ with open(outfile, 'w') as filehandle:
 outfile = 'refs.txt'
 new_refs = "\n".join(new_refs)
 with open(outfile, 'a') as filehandle:
-    filehandle.write('\n')
     filehandle.write(new_refs)
 
 
