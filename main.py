@@ -80,17 +80,17 @@ end = timer()
 errors = "\n".join(errors)
 date_str = date.today().strftime("%d/%m/%Y")
 outfile = 'log_'+date_str+'.txt'
-with open('log.txt', 'w') as filehandle:
+with open(outfile, 'w') as filehandle:
     filehandle.writelines(f"errors:\n {errors}\n")
     filehandle.writelines('\n---------------------\n')
     filehandle.writelines(f"time elapsed in seconds: {end-start}")
 
 # Update refs files
 outfile = 'refs.txt'
-with open('log.txt', 'w') as filehandle:
-    filehandle.writelines(f"errors:\n {errors}\n")
-    filehandle.writelines('\n---------------------\n')
-    filehandle.writelines(f"time elapsed in seconds: {end-start}")
+new_refs = "\n".join(new_refs)
+with open(outfile, 'a') as filehandle:
+    filehandle.write('\n')
+    filehandle.write(new_refs)
 
 
 
