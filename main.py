@@ -1,5 +1,3 @@
-import pandas as pd
-import os.path
 import re
 from datetime import date
 from timeit import default_timer as timer
