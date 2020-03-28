@@ -9,28 +9,11 @@ pd.set_option('display.width', 1000)
 
 pp = pprint.PrettyPrinter(indent=4)
 
-conversion_dict={
-    '^Cases$'               : 'New Cases',
-    '^Change \(cases\)$'    : 'New Cases',
-    '^Change \(deaths\)$'   : 'New Deaths',
-    '^Change Today$'        : 'New Cases',
-    '^Deaths$'              : 'Total Deaths',
-    '^Feb.*Cases$'          : 'New Cases',
-    '^Feb.*Deaths$'         : 'New Deaths',
-    '^New Today$'           : 'New Cases',
-    '^NewCases$'            : 'New Cases',
-    '^NewDeaths'            : 'New Deaths',
-    'Serious.*,.*Critical'  : 'Serious_Critical',
-    r'^Today\'s Deaths$'    : 'New Deaths',
-    '^TotalCases$'          : 'Total Cases',
-    '^TotalDeaths$'         : 'Total Deaths',
-    'TotalRecovered'        : 'Total Recovered',
-    '^Total Severe$'        : 'Serious_Critical',
-    '^Total Critical'       : 'Serious_Critical',
-    '^Country,.*Other$'     : 'Country',
-    '^Country,.*Territory'  : 'Country',
-    '^Total Cured$'             : 'Total Recovered'
-}
+mapper_path = r'D:\PycharmProjects\scrap_corona_history\resources\column_remapper2.csv'
+mapper = pd.read_csv(mapper_path, index_col = 'key', usecols = ['key','value'])
+mapper = mapper.iloc[:,0]
+
+conversion_dict= mapper.to_dict()
 
 
 # Iterate and read csv files into df
@@ -52,8 +35,12 @@ for filename in all_files:
     # Append to df list
     li.append(df)
 
-
+# Join df from all dates
 frame = pd.concat(li, ignore_index=True, sort=False)
+# Remove plus sign from "New Cases" col
 frame['New Cases'] = frame['New Cases'].str.extract('(\d+)')
+# Sort df by date
+frame = frame.sort_values('date')
+# Remove the totalrow
+frame = frame[frame["Country"] != 'Total:']
 
-(frame[frame.Country == 'Israel']).sort_values('date')
