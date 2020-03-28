@@ -13,6 +13,8 @@ from selenium.common.exceptions import TimeoutException
 pd.set_option('display.max_columns', None)
 pd.set_option('display.max_rows', None)
 
+
+
 # adding the incognito argument to our webdriver
 option = webdriver.ChromeOptions()
 option.add_argument('— incognito')
@@ -75,13 +77,16 @@ for i,ref in enumerate(new_refs):
 end = timer()
 
 # Write log to file
+log_dir = 'logs'
 errors = "\n".join(errors)
-date_str = date.today().strftime("%d/%m/%Y")
-outfile = 'log_'+date_str+'.txt'
-with open(outfile, 'w') as filehandle:
-    filehandle.writelines(f"errors:\n {errors}\n")
+date_str = date.today().strftime("%d%m%Y")
+outfile = date_str+'.txt'
+outpath = os.path.join(log_dir,outfile)
+with open(outpath, 'w+') as filehandle:
+    filehandle.writelines(f"errors:{errors}")
     filehandle.writelines('\n---------------------\n')
     filehandle.writelines(f"time elapsed in seconds: {end-start}")
+    filehandle.writelines('\n---------------------\n')
 
 # Update refs files
 outfile = 'refs.txt'
