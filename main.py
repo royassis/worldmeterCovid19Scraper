@@ -1,6 +1,7 @@
 import pandas as pd
 import os.path
 import re
+from datetime import date
 from timeit import default_timer as timer
 
 from selenium import webdriver
@@ -12,21 +13,27 @@ from selenium.common.exceptions import TimeoutException
 pd.set_option('display.max_columns', None)
 pd.set_option('display.max_rows', None)
 
-
+# adding the incognito argument to our webdriver
 option = webdriver.ChromeOptions()
 option.add_argument('— incognito')
 
+# create a new instance of Chrome
 browser = webdriver.Chrome(executable_path=r"C:\Users\roy\Desktop\chromedriver.exe", chrome_options=option)
 
+# send a get request to the appropiate webpage
+# (in this case the main archive page from "The Wayback Machine" for "https://www.worldometers.info/coronavirus/")
 url = 'https://web.archive.org/web/20200101000000*/https://www.worldometers.info/coronavirus/'
 browser.get(url)
 
-# timeout = 20
-# try:
-#     WebDriverWait(browser, timeout).until(EC.visibility_of_element_located((By.XPATH, "//img[@class=’avatar width-full rounded-2']")))
-# except TimeoutException:
-#     print("Timed out waiting for page to load")
-#     browser.quit()
+# Handle a timeout
+timeout = 50
+try:
+    WebDriverWait(browser, timeout).until(EC.visibility_of_element_located((By.XPATH, "//div[@class='search-toolbar-logo']")))
+except TimeoutException:
+    print("Timed out waiting for page to load")
+    browser.quit()
+
+# The links that allready been downloaded are saved here, and should be exluded in this search
 prev_refs = []
 with open('refs.txt', 'r') as filehandle:
     prev_refs.append(filehandle.readline())
@@ -41,7 +48,6 @@ for elem in elems:
     if match:
 
         refs.append(match.group())
-
 
 new_refs =  set(refs) - set(prev_refs)
 
@@ -70,11 +76,22 @@ for i,ref in enumerate(new_refs):
 
 end = timer()
 
-# Write erros to file
+# Write log to file
 errors = "\n".join(errors)
-with open('errors.txt', 'w') as filehandle:
+date_str = date.today().strftime("%d/%m/%Y")
+outfile = 'log_'+date_str+'.txt'
+with open('log.txt', 'w') as filehandle:
     filehandle.writelines(f"errors:\n {errors}\n")
     filehandle.writelines('\n---------------------\n')
     filehandle.writelines(f"time elapsed in seconds: {end-start}")
+
+# Update refs files
+outfile = 'refs.txt'
+with open('log.txt', 'w') as filehandle:
+    filehandle.writelines(f"errors:\n {errors}\n")
+    filehandle.writelines('\n---------------------\n')
+    filehandle.writelines(f"time elapsed in seconds: {end-start}")
+
+
 
 
