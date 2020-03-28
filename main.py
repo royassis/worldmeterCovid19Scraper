@@ -3,6 +3,7 @@ import os.path
 import re
 from datetime import date
 from timeit import default_timer as timer
+from settings import *
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -14,18 +15,12 @@ pd.set_option('display.max_columns', None)
 pd.set_option('display.max_rows', None)
 
 
-
-# adding the incognito argument to our webdriver
-option = webdriver.ChromeOptions()
-option.add_argument('— incognito')
-
 # create a new instance of Chrome
-browser = webdriver.Chrome(executable_path=r"C:\Users\roy\Desktop\chromedriver.exe", chrome_options=option)
+browser = webdriver.Chrome(executable_path=chromedriver_path, chrome_options=option)
 
 # send a get request to the appropiate webpage
 # (in this case the main archive page from "The Wayback Machine" for "https://www.worldometers.info/coronavirus/")
-url = 'https://web.archive.org/web/20200101000000*/https://www.worldometers.info/coronavirus/'
-browser.get(url)
+browser.get(wayback_machine_corona_url)
 
 # Handle a timeout
 timeout = 50
@@ -36,7 +31,6 @@ except TimeoutException:
     browser.quit()
 
 # The links that allready been downloaded are saved here, and should be exluded in this search
-refs_handle = r'resources\refs.txt'
 prev_refs = [line.rstrip('\n') for line in open(refs_handle)]
 
 # Read all hrefs from html script
@@ -44,8 +38,7 @@ elems = browser.find_elements_by_xpath("//a[@href]")
 refs = []
 for elem in elems:
     ref = elem.get_attribute("href")
-    pat = r'https://web.archive.org/web/\d+/https://www.worldometers.info/coronavirus/'
-    match = re.search(pat,ref)
+    match = re.search(url_pattern,ref)
     if match:
         refs.append(match.group())
 
@@ -53,14 +46,12 @@ new_refs =  set(refs) - set(prev_refs)
 
 # Iterate over hrefs and download tables from site
 errors=[]
-data_dir = 'data'
 start = timer()
 
 for i,ref in enumerate(new_refs):
 
     print(f"this is iteration {i+1} from {len(refs)}, "
           f"elapsed time in seconds is: {timer()-start}")
-
     try:
         data = pd.read_html(ref)
         date = "-".join(data[1][1].to_list())
@@ -75,6 +66,7 @@ for i,ref in enumerate(new_refs):
         errors.append(ref)
 
 end = timer()
+
 
 # Write log to file
 log_dir = 'logs'
