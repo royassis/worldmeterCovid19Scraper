@@ -54,6 +54,6 @@ for filename in all_files:
 
 
 frame = pd.concat(li, ignore_index=True, sort=False)
-
+frame['New Cases'] = frame['New Cases'].str.extract('(\d+)')
 
 (frame[frame.Country == 'Israel']).sort_values('date')
