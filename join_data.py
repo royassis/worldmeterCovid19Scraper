@@ -6,36 +6,30 @@ import pprint
 pp = pprint.PrettyPrinter(indent=4)
 
 conversion_dict={
-    '.*\sCases'             : 'New Cases',
     '^Cases$'               : 'New Cases',
-    '^Change.*Cases.*'      : 'New Cases',
-    '^New Today$'           : 'New Cases',
+    '^Change \(cases\)$'    : 'New Cases',
+    '^Change \(deaths\)$'   : 'New Deaths',
     '^Change Today$'        : 'New Cases',
-    '^new.*cases$'          : 'New Cases',
-
-    'ActiveCases'           : 'Total Cases',
-    'TotalCases'            : 'Total Cases',
-
-    '.*\sDeaths'            : 'Total Deaths',
     '^Deaths$'              : 'Total Deaths',
-    '^TotalDeaths$'         : 'Total Deaths',
-
-    '^Change.*Deaths.*'     : 'New Deaths',
-    '^new.*Deaths'          : 'New Deaths',
-
+    '^Feb.*Cases$'          : 'New Cases',
+    '^Feb.*Deaths$'         : 'New Deaths',
+    '^New Today$'           : 'New Cases',
+    '^NewCases$'            : 'New Cases',
+    '^NewDeaths'            : 'New Deaths',
     'Serious.*,.*Critical'  : 'Serious_Critical',
-
-    'TotalRecovered'        : 'Total Recovered'
-
+    r'^Today\'s Deaths$'    : 'New Deaths',
+    '^TotalCases$'          : 'Total Cases',
+    '^TotalDeaths$'         : 'Total Deaths',
+    'TotalRecovered'        : 'Total Recovered',
+    '^Total Severe$'        : 'Serious_Critical',
+    '^Total Critical'       : 'Serious_Critical'
 }
 
 
+# Iterate and read csv files into df
 path = r'data'
 all_files = glob.glob(path + "/*.csv")
-
 li = []
-
-# Iterate and read csv files into df
 for filename in all_files:
     df = pd.read_csv(filename, index_col=[0], header=0)
     df = df.iloc[:,1:]
@@ -47,7 +41,11 @@ for filename in all_files:
     # Append to df list
     li.append(df)
 
+pp.pprint([df.columns.to_list()for df in li])
+print(*[df.columns.to_list()for df in li[-4:]], sep='\n\n')
 
-frame = pd.concat(li[:-10], axis=0, ignore_index=True,sort=True)
+frame = pd.concat(li, ignore_index=True, sort=False)
+
+[df.shape for df in li]
 
 pp.pprint(set(frame.columns))
