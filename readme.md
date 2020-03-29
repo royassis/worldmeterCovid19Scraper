@@ -1,8 +1,82 @@
-settings file includes decleration of global variables and reading csv files into other variables
+# Retrieval of old coronavirus entries of WorldMeter site 
 
-resources folder includes a mapper csv file which maps a old column names and the new desired columns names.
-The same folder also includes refs.txt, a log file which contains urls of the allready downloaded data, not to be downloaded again.
-The same folder also includes urls.csv, that includes the url for the wayback Machine site, of the worldometer corona virus page, 2. and 
-a pattern for catching the correct links while scraping the page.
+## Project Description
+The goal of this project is to retrieve data about the covid19 pandamic. Out main resource is the [worldmeter site](). 
 
-logs folder, contains logs from the last run, the log includs errors and runtimes
+The Worldmeter site maintains live world statistics on population, government ,economics etc. 
+During the time of the covid19 pandamic Worldmeter also maintained live statistics about covid19 cases.
+Worldmeter presents to the public only live data, and not archive data. 
+
+[The Wayback Machine](https://archive.org/web/) is a site which scraps and stores old copies of other sites. We will use this 
+site to gain the old data from Worldmeter.
+
+The links for the covid19 locations in each site are:
+1. https://web.archive.org/web/*/https://www.worldometers.info/coronavirus/ 
+2. https://www.worldometers.info/coronavirus/
+
+## Project Structure
+
+```
+project
+│   readme.md
+│   functions.py
+│   join_data.py    
+│   main.py
+│   settings.py
+│   package_list.yml
+│
+└───data
+│      ...
+│   
+└───logs
+│      ...
+│	
+└───resources
+│      column_remapper.csv
+│      refs.csv
+│      urls.csv
+
+```
+The project contains two main files that are found in the projects main directory - main.py and join_data.py.  
+
+main.py - *NEEDS TO BE EXECUTED CONTINUOUSLY*.  connects to The Wayback Machine which contains links to archived pages
+from Worldmeter, regarding covid19 statistics,  
+downloads dataframes from these links and finally updates a log file.  
+
+join_data.py - takes all the downloaded dataframes and join them in memory to a large frame. 
+
+The project also have some a additional files:  
+
+settings.py - contains important global variables and also reads important .csv files to memory, these  
+will be used throughout the two main files.
+
+functions.py - contains the functions of the project
+
+package_list.yml - an anaconda generated file contains all packages used in the project.  
+can be used by anaconda to create an environment with the same packages. 
+
+The files found in the /resource directory are .csv file which contain links that are used throughout project files  
+and also mapper .csv files.
+
+The /data folder contains the downloaded dataframes in .csv format. 
+
+The /log folder contains logs.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
