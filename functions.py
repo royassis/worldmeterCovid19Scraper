@@ -26,7 +26,7 @@ def update_ref_log(hrefs,new_refs, hrefs_path):
 
     new_refs = pd.DataFrame(new_refs, columns=["href"])
     hrefs = pd.concat([hrefs,new_refs],axis = 0, ignore_index=True, sort=False)
-    hrefs.to_csv(hrefs_path)
+    hrefs.to_csv(hrefs_path, index_label = 'id')
 
 
 def timeout_get_request(browser, timeout = 50):
