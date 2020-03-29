@@ -40,11 +40,13 @@ project
 ```
 The project contains two main files that are found in the projects main directory - main.py and join_data.py.  
 
-main.py - *NEEDS TO BE EXECUTED CONTINUOUSLY*.  connects to The Wayback Machine which contains links to archived pages
+main.py - *NEEDS TO BE EXECUTED DAILY*.  
+connects to The Wayback Machine which contains links to archived pages
 from Worldmeter, regarding covid19 statistics,  
 downloads dataframes from these links and finally updates a log file.  
 
-join_data.py - takes all the downloaded dataframes and join them in memory to a large frame. 
+join_data.py - takes all the downloaded dataframes does some column name manipulation  
+(the number and names of the dataframes is different) and outputs to file.  
 
 The project also have some a additional files:  
 

@@ -24,8 +24,8 @@ def log_errors_and_runtime(errors, delta, log_dir):
 
 def update_ref_log(hrefs,new_refs, hrefs_path):
 
-    new_refs = pd.DataFrame([[new_refs,""]], columns=["href","date"])
-    hrefs = pd.concat([hrefs,new_refs],axis = 0, ignore_index=True)
+    new_refs = pd.DataFrame(new_refs, columns=["href"])
+    hrefs = pd.concat([hrefs,new_refs],axis = 0, ignore_index=True, sort=False)
     hrefs.to_csv(hrefs_path)
 
 
