@@ -1,7 +1,8 @@
-# Retrieval of old coronavirus entries of WorldMeter site 
+# Retrieval of old coronavirus entries from WorldMeter site 
 
 ## Project Description
-The goal of this project is to retrieve data about the covid19 pandamic. Out main resource is the [worldmeter site](). 
+The goal of this project is to retrieve data about the covid19 pandamic. Out main resource is the [worldmeter site]
+(https://www.worldometers.info/). 
 
 The Worldmeter site maintains live world statistics on population, government ,economics etc. 
 During the time of the covid19 pandamic Worldmeter also maintained live statistics about covid19 cases.

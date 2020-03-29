@@ -41,3 +41,5 @@ frame = frame.sort_values('date')
 # Remove the totalrow
 frame = frame[frame["Country"] != 'Total:']
 
+outfile = 'all_dates.csv'
+frame.to_csv(outfile)
