@@ -63,9 +63,8 @@ def download_csv_from_all_links(new_refs):
     return errors
 
 
-def get_fresh_urls(browser, prev_refs, url_pattern):
+def get_all_urls(browser, url_pattern):
 
-    # Read all hrefs from html script
     refs = []
     elems = browser.find_elements_by_xpath("//a[@href]")
     for elem in elems:
@@ -73,6 +72,11 @@ def get_fresh_urls(browser, prev_refs, url_pattern):
         match = re.search(url_pattern, ref)
         if match:
             refs.append(match.group())
+    return refs
 
+def get_fresh_urls(browser, prev_refs, url_pattern):
+
+    # Read all hrefs from html script
+    refs = get_all_urls(browser, url_pattern)
     new_refs = set(refs) - set(prev_refs)
     return new_refs
