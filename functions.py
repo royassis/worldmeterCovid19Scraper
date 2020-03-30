@@ -63,6 +63,7 @@ def download_csv_from_all_links(new_refs):
             outpath = os.path.join(data_dir, outfile)
             df.to_csv(outpath)
         except:
+            print('error')
             errors.append(ref)
 
     return errors
