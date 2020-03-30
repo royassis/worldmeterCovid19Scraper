@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import datetime
 from settings import  *
 import re
 
@@ -11,7 +11,7 @@ from selenium.common.exceptions import TimeoutException
 def log_errors_and_runtime(errors, delta, log_dir):
 
     errors = "\n".join(errors)
-    date_str = date.today().strftime("%d%m%Y")
+    date_str = datetime.today().strftime("%d%m%Y")
     outfile = date_str + '.txt'
     outpath = os.path.join(log_dir, outfile)
 
@@ -54,7 +54,7 @@ def download_csv_from_all_links(new_refs):
             df['ref'] = ref
 
             date_str = re.search('\d+',ref).group()
-            date_obj = date.strptime(date_str, '%Y%m%d')
+            date_obj = datetime.strptime(date_str, '%Y%m%d')
             df['date'] = date_obj
 
             date_repr_to_file = date_obj.strftime('%b-%d-%Y')
