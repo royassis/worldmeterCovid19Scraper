@@ -57,7 +57,7 @@ def download_csv_from_all_links(new_refs):
             date_obj = date.strptime(date_str, '%Y%m%d')
             df['date'] = date_obj
 
-            date_repr_to_file = date.strftime('%b-%d-%Y')
+            date_repr_to_file = date_obj.strftime('%b-%d-%Y')
 
             outfile = date_repr_to_file + '.csv'
             outpath = os.path.join(data_dir, outfile)
