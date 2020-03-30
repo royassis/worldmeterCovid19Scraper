@@ -40,6 +40,9 @@ frame['New Cases'] = frame['New Cases'].str.extract('(\d+)')
 frame = frame.sort_values('date')
 # Remove the totalrow
 frame = frame[frame["Country"] != 'Total:']
+# Get only reliable data (from 10.2 and so on)
+cutoff_date = '2020-02-10'
+frame = frame[frame["date"] >= cutoff_date]
 
 outfile = 'all_dates.csv'
 frame.to_csv(outfile)
