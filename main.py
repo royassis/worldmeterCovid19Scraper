@@ -19,6 +19,7 @@ prev_refs = hrefs.href.to_list()
 # Read all hrefs from html script
 new_refs =  get_fresh_urls(browser, prev_refs, url_pattern)
 
+browser.close()
 # Iterate over hrefs and download tables from site
 start = timeit.default_timer()
 errors = download_csv_from_all_links(new_refs)
