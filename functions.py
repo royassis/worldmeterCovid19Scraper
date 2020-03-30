@@ -49,12 +49,17 @@ def download_csv_from_all_links(new_refs):
         verbose(i, len(new_refs))
         try:
             container = pd.read_html(ref)
-            date = "-".join(container[1][1].to_list())
+            # date = "-".join(container[1][1].to_list())
             df = container[-1]
             df['ref'] = ref
-            df['date'] = re.search("\d+", ref).group()
 
-            outfile = date + '.csv'
+            date_str = re.search('\d+',ref).group()
+            date_obj = date.strptime(date_str, '%Y%m%d')
+            df['date'] = date_obj
+
+            date_repr_to_file = date.strftime('%b-%d-%Y')
+
+            outfile = date_repr_to_file + '.csv'
             outpath = os.path.join(data_dir, outfile)
             df.to_csv(outpath)
         except:
