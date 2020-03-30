@@ -53,7 +53,7 @@ def download_csv_from_all_links(new_refs):
             df = container[-1]
             df['ref'] = ref
 
-            date_str = re.search('\d+',ref).group()
+            date_str = re.search('\d{8}',ref).group()
             date_obj = datetime.strptime(date_str, '%Y%m%d')
             df['date'] = date_obj
 
