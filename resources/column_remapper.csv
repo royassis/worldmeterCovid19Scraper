@@ -1,7 +1,7 @@
 id,key,value
 1,^Cases$,New Cases
-2,^Change (cases)$,New Cases
-3,^Change (deaths)$,New Deaths
+2,^Change \(cases\)$,New Cases
+3,^Change \(deaths\)$,New Deaths
 4,^Change Today$,New Cases
 5,^Deaths$,Total Deaths
 6,^Feb.*Cases$,New Cases
@@ -19,3 +19,4 @@ id,key,value
 18,^Country.*Other$,Country
 19,^Country.*Territory,Country
 20,^Total Cured$,Total Recovered
+21,^1stcase$,Reported1st case

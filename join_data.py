@@ -44,5 +44,8 @@ frame = frame[frame["Country"] != 'Total:']
 cutoff_date = '2020-02-10'
 frame = frame[frame["date"] >= cutoff_date]
 
+# frame['Reported1st case']= frame.fillna('').groupby('Country')['Reported1st case'].transform("max")
+
 outfile = 'all_dates.csv'
 frame.to_csv(outfile)
+
