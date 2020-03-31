@@ -19,3 +19,4 @@ id,key,value
 18,^Country.*Other$,Country
 19,^Country.*Territory,Country
 20,^Total Cured$,Total Recovered
+21,^1stcase$,Reported1st case
