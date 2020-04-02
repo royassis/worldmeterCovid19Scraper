@@ -63,11 +63,11 @@ world_pop['country'] = world_pop['country'].str.replace(pat,'')\
                             .str.strip()\
                             .str.lower()
 
-
 # Join data
 frame = frame.merge(world_pop)
 frame['healthy_total'] = frame['population'] - frame['total_cases']
-
+cols = ['country','date','total_cases','total_deaths','total_recovered','serious_critical','population','healthy_total']
+frame = frame[cols]
 
 # Output to dile
 outfile = 'all_dates.csv'
