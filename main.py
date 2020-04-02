@@ -18,6 +18,7 @@ prev_refs = hrefs.href.to_list()
 
 # Read all hrefs from html script
 new_refs =  get_fresh_urls(browser, prev_refs, url_pattern)
+browser.quit()
 
 # Iterate over hrefs and download tables from site
 start = timeit.default_timer()
@@ -29,5 +30,5 @@ delta = end - start
 log_errors_and_runtime(errors, delta, log_dir)
 update_ref_log(hrefs, new_refs, hrefs_path)
 
-browser.close()
+
 

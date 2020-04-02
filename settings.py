@@ -14,7 +14,8 @@ hrefs_path = os.path.join(resource_dir, 'refs.csv')
 hrefs = pd.read_csv(hrefs_path, index_col ='id')
 
 # Selenium options
-chromedriver_path= os.path.join(resource_dir, 'chromedriver.exe')
+#chromedriver_path= os.path.join(resource_dir, 'chromedriver.exe')
+chromedriver_path= r"C:\Users\roy\Desktop\chromedriver.exe"
 option = webdriver.ChromeOptions()
 option.add_argument('— incognito')
 
