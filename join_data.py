@@ -57,6 +57,7 @@ world_pop = world_pop.rename({'Country (or dependent territory)':'country',
                 'Population':'population'}, axis = 1)
 world_pop = world_pop[['country','population']]
 
+# Fix countries names - get strings not inclosed in brackets or parentheses
 pat = r'(\[.*\])|(\(.*\))'
 world_pop['country'] = world_pop['country'].str.replace(pat,'')\
                             .str.replace('\s+',' ')\
