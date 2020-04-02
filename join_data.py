@@ -48,37 +48,15 @@ disease_data['Country'] = disease_data['Country'].str.lower()
 #
 disease_data.columns = disease_data.columns.str.lower().str.replace("\s+", "_")
 
-# --------------------
-# Get world_population data from the web
-# --------------------
-world_population = pd.read_html(io=read_world_population_data.url,
-                                match=read_world_population_data.match,
-                                attrs = read_world_population_data.attrs)
-world_population = world_population[0]
-
-# Select and rename cols
-world_population = world_population[read_world_population_data.cols]
-world_population = world_population.rename(read_world_population_data.mapping, axis = 1)
-
-# Fix countries col names
-pat = r'(\[.*\])|(\(.*\))'
-world_population['country'] = world_population['country'].str.replace(pat, '')\
-                            .str.replace('\s+',' ')\
-                            .str.strip()\
-                            .str.lower()
 
 # --------------------
 # Join data and world_population data
 # --------------------
-all_data = disease_data.merge(world_population)
+population = pd.read_csv(population_path, index_col = 'id')
+all_data = disease_data.merge(population)
 all_data['healthy_total'] = all_data['world_population'] - all_data['total_cases']
-all_data = all_data[output_cols]
 
 # --------------------
 # # Output to dile
 # --------------------
 all_data.to_csv(outfile)
-
-
-
-

@@ -16,7 +16,6 @@ hrefs_path = os.path.join(resource_dir, 'refs.csv')
 hrefs = pd.read_csv(hrefs_path, index_col ='id')
 
 #final file output
-output_cols = ['country','date','total_cases','total_deaths','total_recovered','serious_critical','world_population','healthy_total']
 outfile = 'all_dates.csv'
 
 
@@ -37,11 +36,4 @@ wayback_machine_corona_url = urls.loc[1,'url']
 url_pattern = urls.loc[2,'url']
 
 # Parameters to read country data
-read_country_data_path = os.path.join(resource_dir,'read_world_population_data.json')
-with open(read_country_data_path) as json_file:
-    read_country_data_dict = json.load(json_file)
-
-MyTuple = namedtuple('read_country_data_dict', read_country_data_dict)
-
-read_world_population_data = MyTuple(**read_country_data_dict)
-
+population_path = os.path.join(resource_dir,'population.csv')
