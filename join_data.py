@@ -48,7 +48,8 @@ outfile = 'all_dates.csv'
 frame.to_csv(outfile)
 
 
-world_pop = pd.read_html('https://en.wikipedia.org/wiki/List_of_countries_and_dependencies_by_population')
+url = 'https://en.wikipedia.org/wiki/List_of_countries_and_dependencies_by_population'
+world_pop = pd.read_html(url)
 world_pop = world_pop[0]
 world_pop = world_pop[['Country (or dependent territory)','Population']]
 world_pop = world_pop.rename({'Country (or dependent territory)':'country',
