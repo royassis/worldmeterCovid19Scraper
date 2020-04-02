@@ -43,11 +43,12 @@ frame = frame[frame["Country"] != 'Total:']
 # Get only reliable data (from 10.2 and so on)
 cutoff_date = '2020-02-10'
 frame = frame[frame["date"] >= cutoff_date]
+#
+frame['Country'] = frame['Country'].str.lower()
+#
+frame.columns = frame.columns.str.lower().str.replace("\s+","_")
 
-outfile = 'all_dates.csv'
-frame.to_csv(outfile)
-
-
+# Get population data
 url = 'https://en.wikipedia.org/wiki/List_of_countries_and_dependencies_by_population'
 world_pop = pd.read_html(url)
 world_pop = world_pop[0]
@@ -61,3 +62,13 @@ world_pop['country'] = world_pop['country'].str.replace(pat,'')\
                             .str.replace('\s+',' ')\
                             .str.strip()\
                             .str.lower()
+
+
+# Join data
+frame = frame.merge(world_pop)
+frame['healthy_total'] = frame['population'] - frame['total_cases']
+
+
+# Output to dile
+outfile = 'all_dates.csv'
+frame.to_csv(outfile)
