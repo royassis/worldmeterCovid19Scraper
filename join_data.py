@@ -33,50 +33,50 @@ for filename in all_files:
     df_list.append(df)
 
 # Join df from all dates
-frame = pd.concat(df_list, ignore_index=True, sort=False)
+disease_data = pd.concat(df_list, ignore_index=True, sort=False)
 # Remove plus sign from "New Cases" col
-frame['New Cases'] = frame['New Cases'].str.extract('(\d+)')
+disease_data['New Cases'] = disease_data['New Cases'].str.extract('(\d+)')
 # Sort df by date
-frame = frame.sort_values('date')
+disease_data = disease_data.sort_values('date')
 # Remove the totalrow
-frame = frame[frame["Country"] != 'Total:']
+disease_data = disease_data[disease_data["Country"] != 'Total:']
 # Get only reliable data (from 10.2 and so on)
 cutoff_date = '2020-02-10'
-frame = frame[frame["date"] >= cutoff_date]
+disease_data = disease_data[disease_data["date"] >= cutoff_date]
 #
-frame['Country'] = frame['Country'].str.lower()
+disease_data['Country'] = disease_data['Country'].str.lower()
 #
-frame.columns = frame.columns.str.lower().str.replace("\s+","_")
+disease_data.columns = disease_data.columns.str.lower().str.replace("\s+", "_")
 
 # --------------------
-# Get population data from the web
+# Get world_population data from the web
 # --------------------
 attrs = {'style': 'text-align:right'}
 match = r'Country \(or dependent territory\)'
-world_pop = pd.read_html(population_data,match=match,  attrs = attrs)
-world_pop = world_pop[0]
-world_pop = world_pop[['Country (or dependent territory)','Population']]
-world_pop = world_pop.rename({'Country (or dependent territory)':'country',
-                'Population':'population'}, axis = 1)
-world_pop = world_pop[['country','population']]
+world_population = pd.read_html(population_data, match=match, attrs = attrs)
+world_population = world_population[0]
+cols = ['Country (or dependent territory)','Population']
+world_population = world_population[cols]
+world_population = world_population.rename({'Country (or dependent territory)': 'country',
+                              'Population':'world_population'}, axis = 1)
 
 # Fix countries names - get strings not inclosed in brackets or parentheses
 pat = r'(\[.*\])|(\(.*\))'
-world_pop['country'] = world_pop['country'].str.replace(pat,'')\
+world_population['country'] = world_population['country'].str.replace(pat, '')\
                             .str.replace('\s+',' ')\
                             .str.strip()\
                             .str.lower()
 
 # --------------------
-# Join data and population data
+# Join data and world_population data
 # --------------------
-frame = frame.merge(world_pop)
-frame['healthy_total'] = frame['population'] - frame['total_cases']
-cols = ['country','date','total_cases','total_deaths','total_recovered','serious_critical','population','healthy_total']
-frame = frame[cols]
+all_data = disease_data.merge(world_population)
+all_data['healthy_total'] = all_data['world_population'] - all_data['total_cases']
+cols = ['country','date','total_cases','total_deaths','total_recovered','serious_critical','world_population','healthy_total']
+all_data = all_data[cols]
 
 # --------------------
 # # Output to dile
 # --------------------
 outfile = 'all_dates.csv'
-frame.to_csv(outfile)
+all_data.to_csv(outfile)
