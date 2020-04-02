@@ -53,8 +53,16 @@ disease_data.columns = disease_data.columns.str.lower().str.replace("\s+", "_")
 # Join data and world_population data
 # --------------------
 population = pd.read_csv(population_path, index_col = 'id')
-all_data = disease_data.merge(population)
-all_data['healthy_total'] = all_data['world_population'] - all_data['total_cases']
+all_data = disease_data.merge(population).fillna(0)
+
+all_data['R'] = all_data['total_recovered'] + all_data['total_deaths']
+all_data['E'] = all_data['activecases'].shift(4).fillna(0)
+all_data['S'] = all_data['activecases']
+all_data['I'] = all_data['population']
+
+all_data = all_data[['R','E','S','I','country','date']]
+
+
 
 # --------------------
 # # Output to dile
