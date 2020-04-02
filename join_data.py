@@ -49,7 +49,9 @@ frame['Country'] = frame['Country'].str.lower()
 frame.columns = frame.columns.str.lower().str.replace("\s+","_")
 
 # Get population data
-world_pop = pd.read_html(population_data)
+attrs = {'style': 'text-align:right'}
+match = r'Country \(or dependent territory\)'
+world_pop = pd.read_html(population_data,match=match,  attrs = attrs)
 world_pop = world_pop[0]
 world_pop = world_pop[['Country (or dependent territory)','Population']]
 world_pop = world_pop.rename({'Country (or dependent territory)':'country',
