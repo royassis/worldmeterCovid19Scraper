@@ -1,6 +1,8 @@
 import os
+from collections import namedtuple
 import pandas as pd
 from selenium import webdriver
+import json
 
 pd.set_option('display.max_columns', 500)
 pd.set_option('display.width', 1000)
@@ -13,11 +15,16 @@ log_dir = 'logs'
 hrefs_path = os.path.join(resource_dir, 'refs.csv')
 hrefs = pd.read_csv(hrefs_path, index_col ='id')
 
+#final file output
+output_cols = ['country','date','total_cases','total_deaths','total_recovered','serious_critical','world_population','healthy_total']
+outfile = 'all_dates.csv'
+
+
 # Selenium options
-#chromedriver_path= os.path.join(resource_dir, 'chromedriver.exe')
-chromedriver_path= r"C:\Users\roy\Desktop\chromedriver.exe"
+chromedriver_path= os.path.join(resource_dir, 'chromedriver.exe')
 option = webdriver.ChromeOptions()
 option.add_argument('— incognito')
+
 
 # Resources
 mapper_path = os.path.join(resource_dir, 'column_remapper.csv')
@@ -28,7 +35,13 @@ urls_path = os.path.join(resource_dir, 'urls.csv')
 urls = pd.read_csv(urls_path, index_col = 'id')
 wayback_machine_corona_url = urls.loc[1,'url']
 url_pattern = urls.loc[2,'url']
-population_data = urls.loc[3,'url']
 
+# Parameters to read country data
+read_country_data_path = os.path.join(resource_dir,'read_world_population_data.json')
+with open(read_country_data_path) as json_file:
+    read_country_data_dict = json.load(json_file)
 
+MyTuple = namedtuple('read_country_data_dict', read_country_data_dict)
+
+read_world_population_data = MyTuple(**read_country_data_dict)
 

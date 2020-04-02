@@ -1,0 +1,8 @@
+{
+    "url": "https://en.wikipedia.org/wiki/List_of_countries_and_dependencies_by_population",
+    "match" : "Country (or dependent territory)",
+    "attrs" : {"style": "text-align:right"},
+    "cols"  : ["Country (or dependent territory)","Population"],
+    "mapping" : {"Country (or dependent territory)": "country",
+                              "Population":"world_population"}
+}

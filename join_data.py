@@ -51,16 +51,16 @@ disease_data.columns = disease_data.columns.str.lower().str.replace("\s+", "_")
 # --------------------
 # Get world_population data from the web
 # --------------------
-attrs = {'style': 'text-align:right'}
-match = r'Country \(or dependent territory\)'
-world_population = pd.read_html(population_data, match=match, attrs = attrs)
+world_population = pd.read_html(io=read_world_population_data.url,
+                                match=read_world_population_data.match,
+                                attrs = read_world_population_data.attrs)
 world_population = world_population[0]
-cols = ['Country (or dependent territory)','Population']
-world_population = world_population[cols]
-world_population = world_population.rename({'Country (or dependent territory)': 'country',
-                              'Population':'world_population'}, axis = 1)
 
-# Fix countries names - get strings not inclosed in brackets or parentheses
+# Select and rename cols
+world_population = world_population[read_world_population_data.cols]
+world_population = world_population.rename(read_world_population_data.mapping, axis = 1)
+
+# Fix countries col names
 pat = r'(\[.*\])|(\(.*\))'
 world_population['country'] = world_population['country'].str.replace(pat, '')\
                             .str.replace('\s+',' ')\
@@ -72,11 +72,13 @@ world_population['country'] = world_population['country'].str.replace(pat, '')\
 # --------------------
 all_data = disease_data.merge(world_population)
 all_data['healthy_total'] = all_data['world_population'] - all_data['total_cases']
-cols = ['country','date','total_cases','total_deaths','total_recovered','serious_critical','world_population','healthy_total']
-all_data = all_data[cols]
+all_data = all_data[output_cols]
 
 # --------------------
 # # Output to dile
 # --------------------
-outfile = 'all_dates.csv'
 all_data.to_csv(outfile)
+
+
+
+
