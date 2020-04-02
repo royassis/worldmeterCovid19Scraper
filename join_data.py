@@ -55,12 +55,12 @@ disease_data.columns = disease_data.columns.str.lower().str.replace("\s+", "_")
 population = pd.read_csv(population_path, index_col = 'id')
 all_data = disease_data.merge(population).fillna(0)
 
+all_data['S'] = all_data['population']
+all_data['E'] = all_data.groupby('country')['activecases'].shift(4).fillna(0)
+all_data['I'] = all_data['activecases']
 all_data['R'] = all_data['total_recovered'] + all_data['total_deaths']
-all_data['E'] = all_data['activecases'].shift(4).fillna(0)
-all_data['S'] = all_data['activecases']
-all_data['I'] = all_data['population']
 
-all_data = all_data[['R','E','S','I','country','date']]
+all_data = all_data[['S','E','I','R','country','date']]
 
 
 
