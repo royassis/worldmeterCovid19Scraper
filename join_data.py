@@ -1,12 +1,12 @@
 from settings import *
 import glob
 import re
-import pprint
 import datetime
 
 
-pp = pprint.PrettyPrinter(indent=4)
-
+# --------------------
+# Merge all seperate data files
+# --------------------
 conversion_dict= column_remapper.to_dict()
 
 # Iterate and read csv files into df
@@ -48,7 +48,9 @@ frame['Country'] = frame['Country'].str.lower()
 #
 frame.columns = frame.columns.str.lower().str.replace("\s+","_")
 
-# Get population data
+# --------------------
+# Get population data from the web
+# --------------------
 attrs = {'style': 'text-align:right'}
 match = r'Country \(or dependent territory\)'
 world_pop = pd.read_html(population_data,match=match,  attrs = attrs)
@@ -65,12 +67,16 @@ world_pop['country'] = world_pop['country'].str.replace(pat,'')\
                             .str.strip()\
                             .str.lower()
 
-# Join data
+# --------------------
+# Join data and population data
+# --------------------
 frame = frame.merge(world_pop)
 frame['healthy_total'] = frame['population'] - frame['total_cases']
 cols = ['country','date','total_cases','total_deaths','total_recovered','serious_critical','population','healthy_total']
 frame = frame[cols]
 
-# Output to dile
+# --------------------
+# # Output to dile
+# --------------------
 outfile = 'all_dates.csv'
 frame.to_csv(outfile)
