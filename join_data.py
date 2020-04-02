@@ -46,3 +46,17 @@ frame = frame[frame["date"] >= cutoff_date]
 
 outfile = 'all_dates.csv'
 frame.to_csv(outfile)
+
+
+world_pop = pd.read_html('https://en.wikipedia.org/wiki/List_of_countries_and_dependencies_by_population')
+world_pop = world_pop[0]
+world_pop = world_pop[['Country (or dependent territory)','Population']]
+world_pop = world_pop.rename({'Country (or dependent territory)':'country',
+                'Population':'population'}, axis = 1)
+world_pop = world_pop[['country','population']]
+
+pat = r'(\[.*\])|(\(.*\))'
+world_pop['country'] = world_pop['country'].str.replace(pat,'')\
+                            .str.replace('\s+',' ')\
+                            .str.strip()\
+                            .str.lower()
