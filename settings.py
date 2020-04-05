@@ -34,6 +34,7 @@ urls_path = os.path.join(resource_dir, 'urls.csv')
 urls = pd.read_csv(urls_path, index_col = 'id')
 wayback_machine_corona_url = urls.loc[1,'url']
 url_pattern = urls.loc[2,'url']
+GOVERNMENT_RESPONSE_URL = urls.loc[4,'url']
 
 # Parameters to read country data
 population_path = os.path.join(resource_dir,'population.csv')

@@ -51,14 +51,26 @@ def main():
 
 
     # --------------------
-    # Join data and world_population data
+    # Read and format GOVERNMENT_RESPONSE data
+    # --------------------
+    response_data = pd.read_excel(GOVERNMENT_RESPONSE_URL)
+    response_data.CountryName = response_data.CountryName.str.lower()
+    response_data = response_data.rename({'CountryName':'country'},axis =1)
+
+    # --------------------
+    # Read population data
     # --------------------
     population = pd.read_csv(population_path, index_col = 'id')
-    all_data = disease_data.merge(population).fillna(0)
+
+    # --------------------
+    # Join data
+    # --------------------
+    all_data = disease_data.merge(population).fillna(0)\
+                           .merge(response_data)
 
 
     # --------------------
-    # # Output to dile
+    # # Output to file
     # --------------------
     all_data.to_csv(outfile)
     return (all_data)
