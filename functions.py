@@ -1,6 +1,7 @@
 from datetime import datetime
 from settings import  *
 import re
+import glob
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -47,7 +48,6 @@ def verbose(i, arrsize):
 
 def download_csv_from_all_links(new_refs):
 
-    errors = []
     for i, ref in enumerate(new_refs):
 
         verbose(i, len(new_refs))
@@ -69,8 +69,6 @@ def download_csv_from_all_links(new_refs):
         except:
             logger.error(ref)
 
-    return errors
-
 
 def get_all_urls(browser, url_pattern):
 
@@ -89,3 +87,15 @@ def get_fresh_urls(browser, prev_refs, url_pattern):
     refs = get_all_urls(browser, url_pattern)
     new_refs = set(refs) - set(prev_refs)
     return new_refs
+
+
+def get_prev_urls(folder):
+    prev_urls=[]
+    all_files = glob.glob(data_dir + "/*.csv")
+    for filename in all_files:
+        df = pd.read_csv(filename)
+        try:
+            prev_urls = prev_urls + df.ref.to_list()
+        except:
+            pass
+    return list(set(prev_urls))

@@ -14,7 +14,7 @@ browser.get(wayback_machine_corona_url)
 timeout_get_request(browser, 50)
 
 # The links that allready been downloaded are saved here, and should be exluded in this search
-prev_refs = hrefs.href.to_list()
+prev_refs = get_prev_urls(data_dir)
 
 # Read all hrefs from html script
 new_refs =  get_fresh_urls(browser, prev_refs, url_pattern)
@@ -26,9 +26,6 @@ errors = download_csv_from_all_links(new_refs)
 end = timeit.default_timer()
 delta = end - start
 
-# Write and update logs
-log_errors_and_runtime(errors, delta, log_dir)
-update_ref_log(hrefs, new_refs, hrefs_path)
 
 
 
