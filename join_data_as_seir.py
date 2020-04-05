@@ -55,7 +55,9 @@ def main():
     # --------------------
     response_data = pd.read_excel(GOVERNMENT_RESPONSE_URL)
     response_data.CountryName = response_data.CountryName.str.lower()
-    response_data = response_data.rename({'CountryName':'country'},axis =1)
+    response_data.Date = pd.to_datetime(response_data.Date,format = '%Y%m%d')
+    response_data = response_data.rename({'CountryName':'country',
+                                          'Date':'date'},axis =1)
 
     # --------------------
     # Read population data
@@ -66,7 +68,7 @@ def main():
     # Join data
     # --------------------
     all_data = disease_data.merge(population).fillna(0)\
-                           .merge(response_data)
+                           .merge(response_data, on =['date','country'], how = 'left')
 
 
     # --------------------
