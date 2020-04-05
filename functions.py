@@ -7,6 +7,10 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 
+import logging.config
+
+logging.config.fileConfig(fname=log_conf_path, disable_existing_loggers=False)
+logger = logging.getLogger('root')
 
 def log_errors_and_runtime(errors, delta, log_dir):
 
@@ -63,8 +67,7 @@ def download_csv_from_all_links(new_refs):
             outpath = os.path.join(data_dir, outfile)
             df.to_csv(outpath)
         except:
-            print('error')
-            errors.append(ref)
+            logger.error(ref)
 
     return errors
 
