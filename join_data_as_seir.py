@@ -66,28 +66,26 @@ def main():
     # --------------------
     # Join data
     # --------------------
-    all_data = disease_data.merge(population).fillna(0)\
-                           .merge(response_data, on =['date','country'], how = 'left')
+    all_data = disease_data.merge(population).fillna(0)
 
+    all_data['S'] = all_data['population']
+    all_data['E'] = all_data.groupby('country')['activecases'].shift(4).fillna(0)
+    all_data['I'] = all_data['activecases']
+    all_data['R'] = all_data['total_recovered'] + all_data['total_deaths']
 
+    output_cols = ['S', 'E', 'I', 'R', 'country', 'date']
+    all_data = all_data[output_cols]
+
+    all_data = all_data.merge(response_data, on =['date','country'], how = 'left')
     # --------------------
     # # Output to file
     # --------------------
-    all_data.to_csv(OUT_FILE)
+    all_data.to_csv(RESULTS_PATH)
     return (all_data)
 
 
 if __name__ == '__main__':
     main()
-
-
-
-import pandas as pd
-
-url = r'https://en.wikipedia.org/wiki/List_of_countries_by_population_(United_Nations)'
-df = pd.read_html(url, match ='(aasdasdsad)|(a)')
-
-
 
 
 
