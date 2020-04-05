@@ -11,7 +11,7 @@ def main():
     conversion_dict= column_remapper.to_dict()
 
     # Iterate and read csv files into df
-    all_files = glob.glob(data_dir + "/*.csv")
+    all_files = glob.glob(DATA_DIR + "/*.csv")
     df_list = []
 
     for filename in all_files:
@@ -42,8 +42,7 @@ def main():
     # Remove the totalrow
     disease_data = disease_data[disease_data["Country"] != 'Total:']
     # Get only reliable data (from 10.2 and so on)
-    cutoff_date = '2020-02-10'
-    disease_data = disease_data[disease_data["date"] >= cutoff_date]
+    disease_data = disease_data[disease_data["date"] >= CUTOFF_DATE]
     #
     disease_data['Country'] = disease_data['Country'].str.lower()
     #
@@ -62,7 +61,7 @@ def main():
     # --------------------
     # Read population data
     # --------------------
-    population = pd.read_csv(population_path, index_col = 'id')
+    population = pd.read_csv(POPULATION_PATH, index_col ='id')
 
     # --------------------
     # Join data
@@ -74,10 +73,21 @@ def main():
     # --------------------
     # # Output to file
     # --------------------
-    all_data.to_csv(outfile)
+    all_data.to_csv(OUT_FILE)
     return (all_data)
 
 
 if __name__ == '__main__':
     main()
+
+
+
+import pandas as pd
+
+url = r'https://en.wikipedia.org/wiki/List_of_countries_by_population_(United_Nations)'
+df = pd.read_html(url, match ='(aasdasdsad)|(a)')
+
+
+
+
 
