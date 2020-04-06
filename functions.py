@@ -114,11 +114,14 @@ def verbose(i, arrsize, url):
 class regex_filter:
     def __init__(self,regex):
         self.regex = regex
+    def __repr__(self):
+        return 'regex_filter'
 
     def validate(self,string):
         match = re.match(self.regex,string)
         if match:
             return match.group()
+
 
 class in_list_filter:
     def __init__(self, elems):
@@ -126,6 +129,9 @@ class in_list_filter:
 
     def validate(self, string):
         return string in self.elems
+
+    def __repr__(self):
+        return 'in_list_filter'
 
 class link_factory(object):
     def __init__(self, browser=None, url=None):
