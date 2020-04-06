@@ -50,10 +50,13 @@ URL_REGEX_PATTERN = urls.loc[2, 'url']
 GOVERNMENT_RESPONSE_URL = urls.loc[4,'url']
 
 #https://web.archive.org/web/*/https://www.worldometers.info/coronavirus/
-# Start error_logger
-logging.config.fileConfig(fname=LOG_CONFIG_PATH, disable_existing_loggers=False)
-error_logger = logging.getLogger('errorLogger')
-verbose_logger = logging.getLogger('root')
+# Start logger
+logging.config.fileConfig(fname=LOG_CONFIG_PATH, disable_existing_loggers=True)
+logger = logging.getLogger('errorLogger')
+logger.handlers[1].setLevel(VERBOSE_LEVEL)
 
-verbose_logger.setLevel(VERBOSE_LEVEL)
+
+
+
+
 
