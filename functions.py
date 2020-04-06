@@ -15,22 +15,20 @@ def timeout_get_request(browser, timeout = 50):
     try:
         WebDriverWait(browser, timeout).until(EC.visibility_of_element_located((By.XPATH, "//div[@class='search-toolbar-logo']")))
     except TimeoutException:
-        print("Timed out waiting for page to load")
+        verbose_logger.info("Timed out waiting for page to load")
         browser.quit()
 
 
-def verbose(i, arrsize):
-    """Function that prints state of download"""
-    print(f'this is file number:{i + 1} from {arrsize}')
-
-
-def download_csv_from_all_links(new_refs):
+def download_csv_from_all_urls(new_refs):
     """downloads csv from all urls"""
+    urls_len = len(new_refs)
+
     for i, ref in enumerate(new_refs):
 
-        verbose(i, len(new_refs))
+        verbose_logger.debug(f'Downloading file {i + 1} from {urls_len}: {ref}')
+
         try:
-            container = pd.read_html(ref)
+            container = pd.read_html(ref, match='Country')
             df = container[-1]
             df['ref'] = ref
 
@@ -44,10 +42,10 @@ def download_csv_from_all_links(new_refs):
             outpath = os.path.join(DATA_DIR, outfile)
             df.to_csv(outpath)
         except:
-            logger.error(ref)
+            error_logger.error(ref)
 
 
-def get_all_urls(browser, url_pattern):
+def get_all_urls_matching_regex(browser, url_pattern):
     """Scraps the wayback machine for coronavirus worldmeter and gets all urls"""
     refs = []
     elems = browser.find_elements_by_xpath("//a[@href]")
@@ -58,10 +56,9 @@ def get_all_urls(browser, url_pattern):
             refs.append(match.group())
     return refs
 
-def get_fresh_urls(browser, prev_refs, url_pattern):
+def get_fresh_urls(all_urls, prev_urls):
     """Compare downloaded urls to all scraped urls"""
-    refs = get_all_urls(browser, url_pattern)
-    new_refs = set(refs) - set(prev_refs)
+    new_refs = set(all_urls) - set(prev_urls)
     return new_refs
 
 
@@ -99,3 +96,8 @@ def update_ref_log(hrefs,new_refs, hrefs_path):
     new_refs = pd.DataFrame(new_refs, columns=["href"])
     hrefs = pd.concat([hrefs,new_refs],axis = 0, ignore_index=True, sort=False)
     hrefs.to_csv(hrefs_path, index_label = 'id')
+
+
+def verbose(i, arrsize, url):
+    """Function that prints state of download"""
+    print(f'Downloading file {i + 1} from {arrsize}: {url}')

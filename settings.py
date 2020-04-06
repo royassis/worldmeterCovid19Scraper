@@ -9,6 +9,8 @@ import logging.config
 pd.set_option('display.max_columns', 500)
 pd.set_option('display.width', 1000)
 
+# Options
+VERBOSE_LEVEL = 'INFO'
 
 # Paths and Dirs
 DATA_DIR = 'data'
@@ -33,8 +35,9 @@ LOG_CONFIG_PATH = os.path.join(RESOURCE_DIR, CONFIG_FILE)
 
 
 # Selenium options
-option = webdriver.ChromeOptions()
-option.add_argument('— incognito')
+options = webdriver.ChromeOptions()
+options.add_argument('— incognito')
+options.add_argument('--headless')
 
 
 # Read CSV's
@@ -47,6 +50,30 @@ URL_REGEX_PATTERN = urls.loc[2, 'url']
 GOVERNMENT_RESPONSE_URL = urls.loc[4,'url']
 
 
-# Start logger
+# Start error_logger
 logging.config.fileConfig(fname=LOG_CONFIG_PATH, disable_existing_loggers=False)
-logger = logging.getLogger('root')
+error_logger = logging.getLogger('errorLogger')
+verbose_logger = logging.getLogger('root')
+
+verbose_logger.setLevel(VERBOSE_LEVEL)
+
+
+mylogger = logging.getLogger('mylogger')
+mylogger.setLevel(logging.INFO)
+
+handler1 = logging.FileHandler('errors.log')
+handler1.setLevel(logging.ERROR)
+mylogger.addHandler(handler1)
+
+handler2 = logging.StreamHandler()
+handler2.setLevel(logging.INFO)
+mylogger.addHandler(handler2)
+
+class MyFilter(object):
+    def __init__(self, level):
+        self.__level = level
+
+    def filter(self, logRecord):
+        return logRecord.levelno <= self.__level
+
+handler1.addFilter(MyFilter(logging.ERRORS))
