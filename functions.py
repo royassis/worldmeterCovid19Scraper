@@ -59,7 +59,7 @@ def get_all_urls_matching_regex(browser, url_pattern):
 def get_fresh_urls(all_urls, prev_urls):
     """Compare downloaded urls to all scraped urls"""
     new_refs = list(set(all_urls) - set(prev_urls))
-    # rmemove today's url
+    # rmemove today's main_url
     new_refs = new_refs[:-1]
     retval = new_refs
 
@@ -108,3 +108,38 @@ def update_ref_log(hrefs,new_refs, hrefs_path):
 def verbose(i, arrsize, url):
     """Function that prints state of download"""
     print(f'Downloading file {i + 1} from {arrsize}: {url}')
+
+
+
+
+
+class foo(object):
+    def __init__(self, url=None, browser=None):
+
+        self.browser = browser
+        self.main_url = url
+        self.all_links =[]
+        self.filters=[]
+        self.valid_urls =[]
+
+    def get_all_urls(self):
+        elems = self.browser.find_elements_by_xpath("//a[@href]")
+        elems = [elem.get_attribute("href") for elem in elems]
+        self.all_links = elems
+
+    def add_filter(self, filter_arr):
+        self.filters = self.filters + filter_arr
+
+    def apply_all_filters(self, url):
+        results = []
+        for filter in self.filters:
+            result = filter(url)
+            results.append(result)
+        return all(results)
+
+    def filter_urls(self):
+        for link in self.all_links:
+            result = self.apply_all_filters(link)
+            if result:
+                self.valid_urls.append(result)
+
