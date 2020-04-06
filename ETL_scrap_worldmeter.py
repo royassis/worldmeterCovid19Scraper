@@ -10,6 +10,7 @@ browser = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH, options=options)
 logger.info('>>Connecting to URL..waiting for response')
 browser.get(WAYBACK_MACHINE_CORONA_URL)
 
+f = link_factory(browser, WAYBACK_MACHINE_CORONA_URL)
 # Handle a timeout
 timeout_get_request(browser, 50)
 

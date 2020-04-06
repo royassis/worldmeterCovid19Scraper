@@ -45,9 +45,9 @@ mapper = pd.read_csv(MAPPER_PATH, index_col ='key', usecols = ['key', 'value'])
 column_remapper = mapper.iloc[:,0]
 urls = pd.read_csv(URLS_PATH, index_col ='id')
 
-WAYBACK_MACHINE_CORONA_URL = urls.loc[7, 'main_url']
-URL_REGEX_PATTERN = urls.loc[2, 'main_url']
-GOVERNMENT_RESPONSE_URL = urls.loc[4,'main_url']
+WAYBACK_MACHINE_CORONA_URL = urls.loc[7, 'url']
+URL_REGEX_PATTERN = urls.loc[2, 'url']
+GOVERNMENT_RESPONSE_URL = urls.loc[4,'url']
 
 #https://web.archive.org/web/*/https://www.worldometers.info/coronavirus/
 # Start logger

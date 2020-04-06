@@ -111,35 +111,60 @@ def verbose(i, arrsize, url):
 
 
 
+class regex_filter:
+    def __init__(self,regex):
+        self.regex = regex
 
+    def validate(self,string):
+        match = re.match(self.regex,string)
+        if match:
+            return match.group()
 
-class foo(object):
-    def __init__(self, url=None, browser=None):
+class in_list_filter:
+    def __init__(self, elems):
+        self.elems = elems
 
-        self.browser = browser
+    def validate(self, string):
+        return string in self.elems
+
+class link_factory(object):
+    def __init__(self, browser=None, url=None):
+
         self.main_url = url
+        self.browser = browser
         self.all_links =[]
         self.filters=[]
         self.valid_urls =[]
 
     def get_all_urls(self):
+        self.browser.get(self.main_url)
+        timeout_get_request(self.browser, 50)
         elems = self.browser.find_elements_by_xpath("//a[@href]")
         elems = [elem.get_attribute("href") for elem in elems]
         self.all_links = elems
 
     def add_filter(self, filter_arr):
+        if type(filter_arr) != list:
+            filter_arr = [filter_arr]
         self.filters = self.filters + filter_arr
 
-    def apply_all_filters(self, url):
+    def apply_filters(self, url):
+        return_value = url
         results = []
         for filter in self.filters:
-            result = filter(url)
+            result = filter.validate(url)
             results.append(result)
-        return all(results)
 
-    def filter_urls(self):
+        if not all(results):
+            return_value = None
+
+        return return_value
+
+    def validate_urls(self):
         for link in self.all_links:
-            result = self.apply_all_filters(link)
+            result = self.apply_filters(link)
             if result:
                 self.valid_urls.append(result)
 
+    def quit(self):
+        self.browser.quit()
