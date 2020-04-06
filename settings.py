@@ -57,23 +57,3 @@ verbose_logger = logging.getLogger('root')
 
 verbose_logger.setLevel(VERBOSE_LEVEL)
 
-
-mylogger = logging.getLogger('mylogger')
-mylogger.setLevel(logging.INFO)
-
-handler1 = logging.FileHandler('errors.log')
-handler1.setLevel(logging.ERROR)
-mylogger.addHandler(handler1)
-
-handler2 = logging.StreamHandler()
-handler2.setLevel(logging.INFO)
-mylogger.addHandler(handler2)
-
-class MyFilter(object):
-    def __init__(self, level):
-        self.__level = level
-
-    def filter(self, logRecord):
-        return logRecord.levelno <= self.__level
-
-handler1.addFilter(MyFilter(logging.ERRORS))
