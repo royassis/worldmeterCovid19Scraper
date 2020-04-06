@@ -58,8 +58,15 @@ def get_all_urls_matching_regex(browser, url_pattern):
 
 def get_fresh_urls(all_urls, prev_urls):
     """Compare downloaded urls to all scraped urls"""
-    new_refs = set(all_urls) - set(prev_urls)
-    return new_refs
+    new_refs = list(set(all_urls) - set(prev_urls))
+    # rmemove today's url
+    new_refs = new_refs[:-1]
+    retval = new_refs
+
+    if len(new_refs) > 0:
+        retval = None
+
+    return retval
 
 
 def get_prev_urls():

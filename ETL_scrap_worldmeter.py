@@ -7,7 +7,7 @@ browser = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH, options=options)
 
 # send a get request to the appropiate webpage
 # (in this case the main archive page from "The Wayback Machine" for "https://www.worldometers.info/coronavirus/")
-verbose_logger.info('>>Connecting to URL')
+verbose_logger.info('>>Connecting to URL..waiting for response')
 browser.get(WAYBACK_MACHINE_CORONA_URL)
 
 # Handle a timeout
@@ -17,7 +17,7 @@ timeout_get_request(browser, 50)
 verbose_logger.info('>>Checking for new links in URL')
 prev_urls = get_prev_urls()
 all_urls = get_all_urls_matching_regex(browser, URL_REGEX_PATTERN)
-new_urls =  list(set(all_urls) - set(prev_urls))[:-1]
+new_urls = get_fresh_urls(all_urls,prev_urls)
 
 verbose_logger.info('>>Quitting chromium')
 browser.quit()
