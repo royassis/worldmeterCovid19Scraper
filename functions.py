@@ -42,7 +42,7 @@ def download_csv_from_all_urls(new_refs):
             outpath = os.path.join(DATA_DIR, outfile)
             df.to_csv(outpath)
         except:
-            logger.error(ref)
+            logger.error(f'There have been a problem with {ref}')
 
 
 def get_all_urls_matching_regex(browser, url_pattern):
