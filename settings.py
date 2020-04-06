@@ -45,11 +45,11 @@ mapper = pd.read_csv(MAPPER_PATH, index_col ='key', usecols = ['key', 'value'])
 column_remapper = mapper.iloc[:,0]
 urls = pd.read_csv(URLS_PATH, index_col ='id')
 
-WAYBACK_MACHINE_CORONA_URL = urls.loc[1, 'url']
+WAYBACK_MACHINE_CORONA_URL = urls.loc[7, 'url']
 URL_REGEX_PATTERN = urls.loc[2, 'url']
 GOVERNMENT_RESPONSE_URL = urls.loc[4,'url']
 
-
+#https://web.archive.org/web/*/https://www.worldometers.info/coronavirus/
 # Start error_logger
 logging.config.fileConfig(fname=LOG_CONFIG_PATH, disable_existing_loggers=False)
 error_logger = logging.getLogger('errorLogger')

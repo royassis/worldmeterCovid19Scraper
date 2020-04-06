@@ -13,7 +13,7 @@ from selenium.common.exceptions import TimeoutException
 def timeout_get_request(browser, timeout = 50):
     """Set timeout for response from site"""
     try:
-        WebDriverWait(browser, timeout).until(EC.visibility_of_element_located((By.XPATH, "//div[@class='search-toolbar-logo']")))
+        WebDriverWait(browser, timeout).until(EC.visibility_of_element_located((By.XPATH, "//div[@class='calendar-day ']")))
     except TimeoutException:
         verbose_logger.info("Timed out waiting for page to load")
         browser.quit()
