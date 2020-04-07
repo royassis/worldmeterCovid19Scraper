@@ -25,7 +25,7 @@ def download_csv_from_all_urls(new_refs):
 
     for i, ref in enumerate(new_refs):
 
-        logger.debug(f'Downloading file {i + 1} from {urls_len}: {ref}')
+        logger.info(f'Downloading file {i + 1} from {urls_len}: {ref}')
 
         try:
             container = pd.read_html(ref, match='Country')
@@ -60,10 +60,11 @@ def get_fresh_urls(all_urls, prev_urls):
     """Compare downloaded urls to all scraped urls"""
     new_refs = list(set(all_urls) - set(prev_urls))
     # rmemove today's main_url
+    new_refs.sort()
     new_refs = new_refs[:-1]
     retval = new_refs
 
-    if len(new_refs) > 0:
+    if len(new_refs) == 0:
         retval = None
 
     return retval
