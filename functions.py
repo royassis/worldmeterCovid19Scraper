@@ -135,9 +135,9 @@ class in_list_filter:
         return 'in_list_filter'
 
 class link_factory(object):
-    def __init__(self, browser=None, url=None):
+    def __init__(self, browser=None, main_url=None):
 
-        self.main_url = url
+        self.main_url = main_url
         self.browser = browser
         self.all_links =[]
         self.filters=[]
@@ -167,7 +167,7 @@ class link_factory(object):
 
         return return_value
 
-    def validate_urls(self):
+    def filter_urls(self):
         for link in self.all_links:
             result = self.apply_filters(link)
             if result:

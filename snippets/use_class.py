@@ -14,7 +14,7 @@ reg_filter = regex_filter(URL_REGEX_PATTERN)
 link_f.add_filter(in_list_filter)
 link_f.add_filter(regex_filter)
 
-link_f.validate_urls()
+link_f.filter_urls()
 link_f.valid_urls
 
 link_f.quit()
