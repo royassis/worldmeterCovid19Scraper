@@ -6,3 +6,4 @@ id,url,desc
 5,https://web.archive.org/
 6,https://www.worldometers.info/coronavirus/,
 7,https://web.archive.org/web/*/https://www.worldometers.info/coronavirus/,
+8,https://web.archive.org/web/{}/https://www.worldometers.info/coronavirus/,

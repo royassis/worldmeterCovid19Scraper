@@ -3,6 +3,7 @@ import os
 import pandas as pd
 from selenium import webdriver
 import logging.config
+from datetime import date
 
 
 # Pandas options
@@ -21,7 +22,7 @@ CUTOFF_DATE = '2020-02-10'
 RESOURCE_DIR = 'resources'
 CHROMEDRIVER_PATH= os.path.join(RESOURCE_DIR, 'chromedriver.exe')
 POPULATION_PATH = os.path.join(RESOURCE_DIR, 'population.csv')
-URLS_PATH = os.path.join(RESOURCE_DIR, 'urls.csv')
+URLS_PATH = os.path.join(RESOURCE_DIR, 'urls_and_patterns.csv')
 
 RESULTS_DIR = 'results'
 RESULTS_FILE = 'all_dates.csv'
@@ -48,6 +49,12 @@ urls = pd.read_csv(URLS_PATH, index_col ='id')
 WAYBACK_MACHINE_CORONA_URL = urls.loc[7, 'url']
 URL_REGEX_PATTERN = urls.loc[2, 'url']
 GOVERNMENT_RESPONSE_URL = urls.loc[4,'url']
+WAYBACK_MACHINE_CORONA_PATTERN = urls.loc[8,'url']
+
+# Exluded urls
+EXLUDED_URLS_CSV_FILE = 'excluded_urls.csv'
+EXLUDED_URLS_CSV_PATH = os.path.join(RESOURCE_DIR,EXLUDED_URLS_CSV_FILE)
+exluded_urls_csv = pd.read_csv(EXLUDED_URLS_CSV_PATH, index_col ='id')
 
 #https://web.archive.org/web/*/https://www.worldometers.info/coronavirus/
 # Start logger
@@ -55,8 +62,7 @@ logging.config.fileConfig(fname=LOG_CONFIG_PATH, disable_existing_loggers=True)
 logger = logging.getLogger('errorLogger')
 logger.handlers[1].setLevel(VERBOSE_LEVEL)
 
-
-
-
+# Date
+todays_date = date.today().strftime("%Y%m%d")
 
 

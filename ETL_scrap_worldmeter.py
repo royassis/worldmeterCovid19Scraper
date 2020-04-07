@@ -17,8 +17,9 @@ timeout_get_request(browser, 50)
 # Get only new data
 logger.info('>>Checking for new links in URL')
 prev_urls = get_prev_urls()
+exluded_urls = exluded_urls_csv.url.to_list()
 all_urls = get_all_urls_matching_regex(browser, URL_REGEX_PATTERN)
-new_urls = get_fresh_urls(all_urls,prev_urls)
+new_urls = get_fresh_urls(all_urls,prev_urls,exluded_urls)
 
 # Iterate over hrefs and download tables from site
 if new_urls:

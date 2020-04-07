@@ -56,9 +56,9 @@ def get_all_urls_matching_regex(browser, url_pattern):
             refs.append(match.group())
     return refs
 
-def get_fresh_urls(all_urls, prev_urls):
+def get_fresh_urls(all_urls, prev_urls, exluded_urls):
     """Compare downloaded urls to all scraped urls"""
-    new_refs = list(set(all_urls) - set(prev_urls))
+    new_refs = list(set(all_urls) - set(prev_urls) - set(exluded_urls))
     # rmemove today's main_url
     new_refs.sort()
     new_refs = new_refs[:-1]
@@ -125,8 +125,15 @@ class regex_filter:
 
 
 class in_list_filter:
-    def __init__(self, elems):
+    def __init__(self, elems=[]):
         self.elems = elems
+
+    def add_elements(self,elems):
+
+        if  not hasattr(elems,'sort'):
+            elems = [elems]
+
+        self.elems = self.elems + elems
 
     def validate(self, string):
         return string in self.elems
@@ -175,3 +182,7 @@ class link_factory(object):
 
     def quit(self):
         self.browser.quit()
+
+def date_to_url(url_pattern,date):
+    url = 'https://web.archive.org/web/{}/https://www.worldometers.info/coronavirus/'.format(date)
+    return url
