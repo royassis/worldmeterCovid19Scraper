@@ -14,7 +14,7 @@ pd.set_option('display.width', 1000)
 VERBOSE_LEVEL = 'INFO'
 
 # Paths and Dirs
-DATA_DIR = 'data'
+DATA_DIR = 'data/worldmeter'
 LOG_DIR = 'logs'
 
 CUTOFF_DATE = '2020-02-10'
