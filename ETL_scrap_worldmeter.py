@@ -1,4 +1,4 @@
-from functions import *
+from utils.functions import *
 from selenium import webdriver
 
 # create a new instance of Chrome

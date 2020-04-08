@@ -1,4 +1,4 @@
-from functions import *
+from utils.functions import *
 from settings import *
 from selenium import webdriver
 

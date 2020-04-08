@@ -39,7 +39,7 @@ def download_csv_from_all_urls(new_refs):
             date_repr_to_file = date_obj.strftime('%b-%d-%Y')
 
             outfile = date_repr_to_file + '.csv'
-            outpath = os.path.join(DATA_DIR, outfile)
+            outpath = os.path.join(OUTPUT_DIR, outfile)
             df.to_csv(outpath)
         except:
             logger.error(f'There have been a problem with {ref}')
@@ -73,7 +73,7 @@ def get_fresh_urls(all_urls, prev_urls, exluded_urls):
 def get_prev_urls():
     """Read all downloaded csv's and make a list of all old urls"""
     prev_urls=[]
-    all_files = glob.glob(DATA_DIR + "/*.csv")
+    all_files = glob.glob(OUTPUT_DIR + "/*.csv")
     for filename in all_files:
         df = pd.read_csv(filename)
         try:

@@ -14,9 +14,10 @@ pd.set_option('display.width', 1000)
 VERBOSE_LEVEL = 'INFO'
 
 # Paths and Dirs
-DATA_DIR = 'data/worldmeter'
+DATA_DIR = 'data'
 LOG_DIR = 'logs'
 
+OUTPUT_DIR = os.path.join(DATA_DIR,'worldmeter')
 CUTOFF_DATE = '2020-02-10'
 
 RESOURCE_DIR = 'resources'
