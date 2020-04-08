@@ -25,7 +25,7 @@ CHROMEDRIVER_PATH= os.path.join(RESOURCE_DIR, 'chromedriver.exe')
 POPULATION_PATH = os.path.join(RESOURCE_DIR, 'population.csv')
 URLS_PATH = os.path.join(RESOURCE_DIR, 'urls_and_patterns.csv')
 
-RESULTS_DIR = 'results'
+RESULTS_DIR = 'data/results'
 RESULTS_FILE = 'all_dates.csv'
 RESULTS_PATH = os.path.join(RESULTS_DIR, RESULTS_FILE)
 
