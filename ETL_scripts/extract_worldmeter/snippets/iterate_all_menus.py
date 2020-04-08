@@ -1,4 +1,4 @@
-from scripts.extract_worldmeter.settings import  *
+from ETL_scripts.extract_worldmeter.settings import  *
 import re
 
 from selenium.webdriver import ActionChains

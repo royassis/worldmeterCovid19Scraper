@@ -1,5 +1,5 @@
 from datetime import datetime
-from scripts.extract_worldmeter.settings import  *
+from ETL_scripts.extract_worldmeter.settings import  *
 import re
 import glob
 

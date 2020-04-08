@@ -1,4 +1,4 @@
-from scripts.extract_worldmeter.settings import *
+from ETL_scripts.extract_worldmeter.settings import *
 import glob
 import re
 import datetime
