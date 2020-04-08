@@ -3,7 +3,7 @@ import pandas as pd
 import json
 import os
 
-OUTDIR = 'D:\PycharmProjects\scrap_corona_history\data\gov_data'
+OUTDIR = r'D:\PycharmProjects\scrap_corona_history\resources\gov_data'
 RECORDS_LIMIT = 10000000
 
 df = pd.read_csv('resources/gov_resource.csv')
