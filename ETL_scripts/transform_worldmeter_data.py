@@ -13,7 +13,7 @@ def main():
     conversion_dict= column_remapper.to_dict()
 
     # Iterate and read csv files into df
-    all_files = glob.glob(OUTPUT_PATH + "/*.csv")
+    all_files = glob.glob(WORLDMETER_DATA + "/*.csv")
     df_list = []
 
     for filename in all_files:
@@ -63,7 +63,7 @@ def main():
     # --------------------
     # Read population raw_data
     # --------------------
-    population = pd.read_csv(POPULATION_PATH, index_col ='id')
+    population = pd.read_csv(POPULATION_CSV_PATH, index_col ='id')
 
     # --------------------
     # Join raw_data

@@ -19,6 +19,6 @@ for _, entry in df.iterrows():
     data = pd.DataFrame(records).set_index("_id")
 
     outfile = ".".join([entry['name'], 'csv'])
-    outpath = os.path.join(GOV_OUTPATH, outfile)
+    outpath = os.path.join(WORLDMETER_DATA, outfile)
     data.to_csv(outpath)
 
