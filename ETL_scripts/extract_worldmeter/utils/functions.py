@@ -2,6 +2,7 @@ from datetime import datetime
 from ETL_scripts.extract_worldmeter.settings import  *
 import re
 import glob
+import pandas as pd
 
 # Impored for scraping TheWaybackMachine
 from selenium.webdriver.common.by import By
@@ -15,7 +16,7 @@ def timeout_get_request(browser, timeout = 50):
     try:
         WebDriverWait(browser, timeout).until(EC.visibility_of_element_located((By.XPATH, "//div[@class='calendar-day ']")))
     except TimeoutException:
-        logger.info("Timed out waiting for page to load")
+        logging.info("Timed out waiting for page to load")
         browser.quit()
 
 
@@ -25,7 +26,7 @@ def download_csv_from_all_urls(new_refs):
 
     for i, ref in enumerate(new_refs):
 
-        logger.info(f'Downloading file {i + 1} from {urls_len}: {ref}')
+        logging.info(f'Downloading file {i + 1} from {urls_len}: {ref}')
 
         try:
             container = pd.read_html(ref, match='Country')
@@ -42,7 +43,7 @@ def download_csv_from_all_urls(new_refs):
             outpath = os.path.join(OUTPUT_DIR, outfile)
             df.to_csv(outpath)
         except:
-            logger.error(f'There have been a problem with {ref}')
+            logging.error(f'There have been a problem with {ref}')
 
 
 def get_all_urls_matching_regex(browser, url_pattern):
@@ -70,10 +71,10 @@ def get_fresh_urls(all_urls, prev_urls, exluded_urls):
     return retval
 
 
-def get_prev_urls():
+def get_prev_urls(path):
     """Read all downloaded csv's and make a list of all old urls"""
     prev_urls=[]
-    all_files = glob.glob(OUTPUT_DIR + "/*.csv")
+    all_files = glob.glob(path + "/*.csv")
     for filename in all_files:
         df = pd.read_csv(filename)
         try:
