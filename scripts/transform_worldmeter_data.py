@@ -4,7 +4,7 @@ import re
 import datetime
 
 # --------------------
-# Merge all seperate data files
+# Merge all seperate raw_data files
 # --------------------
 
 def main():
@@ -41,7 +41,7 @@ def main():
     disease_data = disease_data.sort_values('date')
     # Remove the totalrow
     disease_data = disease_data[disease_data["Country"] != 'Total:']
-    # Get only reliable data (from 10.2 and so on)
+    # Get only reliable raw_data (from 10.2 and so on)
     disease_data = disease_data[disease_data["date"] >= CUTOFF_DATE]
     #
     disease_data['Country'] = disease_data['Country'].str.lower()
@@ -50,7 +50,7 @@ def main():
 
 
     # --------------------
-    # Read and format GOVERNMENT_RESPONSE data
+    # Read and format GOVERNMENT_RESPONSE raw_data
     # --------------------
     response_data = pd.read_excel(GOVERNMENT_RESPONSE_URL)
     response_data.CountryName = response_data.CountryName.str.lower()
@@ -59,12 +59,12 @@ def main():
                                           'Date':'date'},axis =1)
 
     # --------------------
-    # Read population data
+    # Read population raw_data
     # --------------------
     population = pd.read_csv(POPULATION_PATH, index_col ='id')
 
     # --------------------
-    # Join data
+    # Join raw_data
     # --------------------
     all_data = disease_data.merge(population).fillna(0)
 

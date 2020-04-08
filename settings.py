@@ -14,7 +14,7 @@ pd.set_option('display.width', 1000)
 VERBOSE_LEVEL = 'INFO'
 
 # Paths and Dirs
-DATA_DIR = 'data'
+DATA_DIR = 'raw_data'
 LOG_DIR = 'logs'
 
 OUTPUT_DIR = os.path.join(DATA_DIR,'worldmeter')
@@ -25,7 +25,7 @@ CHROMEDRIVER_PATH= os.path.join(RESOURCE_DIR, 'chromedriver.exe')
 POPULATION_PATH = os.path.join(RESOURCE_DIR, 'population.csv')
 URLS_PATH = os.path.join(RESOURCE_DIR, 'urls_and_patterns.csv')
 
-RESULTS_DIR = 'data/results'
+RESULTS_DIR = 'raw_data/loaded_data'
 RESULTS_FILE = 'all_dates.csv'
 RESULTS_PATH = os.path.join(RESULTS_DIR, RESULTS_FILE)
 

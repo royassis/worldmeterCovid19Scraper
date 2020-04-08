@@ -14,7 +14,7 @@ f = link_factory(browser, WAYBACK_MACHINE_CORONA_URL)
 # Handle a timeout
 timeout_get_request(browser, 50)
 
-# Get only new data
+# Get only new raw_data
 logger.info('>>Checking for new links in URL')
 prev_urls = get_prev_urls()
 exluded_urls = exluded_urls_csv.url.to_list()
