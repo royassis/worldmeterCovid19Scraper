@@ -1,4 +1,4 @@
-from settings import *
+from scripts.extract_worldmeter.settings import *
 import glob
 import re
 import datetime

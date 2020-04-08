@@ -1,5 +1,5 @@
-from utils.functions import *
-from settings import *
+from scripts.extract_worldmeter.utils.functions import *
+from scripts.extract_worldmeter.settings import *
 from selenium import webdriver
 
 browser = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH, options=options)

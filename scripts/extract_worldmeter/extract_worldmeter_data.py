@@ -1,4 +1,4 @@
-from utils.functions import *
+from scripts.extract_worldmeter.utils.functions import *
 from selenium import webdriver
 
 # create a new instance of Chrome
