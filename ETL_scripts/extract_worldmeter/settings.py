@@ -9,7 +9,7 @@ DATA_DIR = 'raw_data'
 LOG_DIR = 'logs'
 RESOURCE_DIR = 'resources'
 
-OUTPUT_DIR = 'DW/raw_data/worldmeter'
+OUTPUT_PATH = r'D:\PycharmProjects\scrap_corona_history\DW\raw_data\worldmeter'
 
 SITE_URL = 'https://www.worldometers.info/coronavirus/'
 WAYBACK_URL_BASE = r'https://web.archive.org/web'
@@ -30,9 +30,9 @@ with open(EXLUDED_URLS_PATH) as f:
     excluded_urls = f.read().splitlines()
 
 # Start logger
-VERBOSE_LEVEL = 'INFO'
-logging.basicConfig(format=VERBOSE_LEVEL)
+VERBOSE_LEVEL = logging.INFO
+logging.basicConfig(level=VERBOSE_LEVEL)
+
 # Date
 todays_date = date.today().strftime("%Y%m%d")
-
 

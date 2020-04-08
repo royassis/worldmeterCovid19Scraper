@@ -29,6 +29,7 @@ def download_csv_from_all_urls(new_refs):
         logging.info(f'Downloading file {i + 1} from {urls_len}: {ref}')
 
         try:
+            # TODO match=
             container = pd.read_html(ref, match='Country')
             df = container[-1]
             df['ref'] = ref
@@ -40,7 +41,7 @@ def download_csv_from_all_urls(new_refs):
             date_repr_to_file = date_obj.strftime('%b-%d-%Y')
 
             outfile = date_repr_to_file + '.csv'
-            outpath = os.path.join(OUTPUT_DIR, outfile)
+            outpath = os.path.join(OUTPUT_PATH, outfile)
             df.to_csv(outpath)
         except:
             logging.error(f'There have been a problem with {ref}')

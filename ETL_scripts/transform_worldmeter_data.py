@@ -11,7 +11,7 @@ def main():
     conversion_dict= column_remapper.to_dict()
 
     # Iterate and read csv files into df
-    all_files = glob.glob(OUTPUT_DIR + "/*.csv")
+    all_files = glob.glob(OUTPUT_PATH + "/*.csv")
     df_list = []
 
     for filename in all_files:

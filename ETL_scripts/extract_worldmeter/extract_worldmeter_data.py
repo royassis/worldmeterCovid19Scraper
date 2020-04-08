@@ -15,7 +15,7 @@ timeout_get_request(browser, 50)
 
 # Get only new raw_data
 logging.info('>>Checking for new links in URL')
-prev_urls = get_prev_urls(OUTPUT_DIR)
+prev_urls = get_prev_urls(OUTPUT_PATH)
 all_urls = get_all_urls_matching_regex(browser, URL_REGEX_PATTERN)
 new_urls = get_fresh_urls(all_urls, prev_urls, excluded_urls)
 
