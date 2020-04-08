@@ -8,18 +8,17 @@ browser = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH, options=options)
 # send a get request to the appropiate webpage
 # (in this case the main archive page from "The Wayback Machine" for "https://www.worldometers.info/coronavirus/")
 logger.info(f'>>Connecting to URL..waiting for response')
-browser.get(WAYBACK_MACHINE_CORONA_URL)
+browser.get(WAYBACK_FULLPATH)
 
-f = link_factory(browser, WAYBACK_MACHINE_CORONA_URL)
+f = link_factory(browser, WAYBACK_FULLPATH)
 # Handle a timeout
 timeout_get_request(browser, 50)
 
 # Get only new raw_data
 logger.info('>>Checking for new links in URL')
 prev_urls = get_prev_urls()
-exluded_urls = exluded_urls_csv.url.to_list()
 all_urls = get_all_urls_matching_regex(browser, URL_REGEX_PATTERN)
-new_urls = get_fresh_urls(all_urls,prev_urls,exluded_urls)
+new_urls = get_fresh_urls(all_urls, prev_urls, excluded_urls)
 
 # Iterate over hrefs and download tables from site
 if new_urls:
