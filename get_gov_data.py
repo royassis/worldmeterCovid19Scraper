@@ -6,7 +6,7 @@ import os
 OUTDIR = 'D:\PycharmProjects\scrap_corona_history\data\gov_data'
 RECORDS_LIMIT = 10000000
 
-df = pd.read_csv('snippets/gov_resource.csv')
+df = pd.read_csv('resources/gov_resource.csv')
 
 df['datastore_structure'] = df['resource_id'].apply(lambda x: {'resource_id': x,'limit':RECORDS_LIMIT})\
                                               .apply(lambda x: str.encode(json.dumps(x)))
