@@ -21,8 +21,8 @@ options.add_argument('— incognito')
 options.add_argument('--headless')
 
 # Webpage enteties
-TIMEOUT_ENTITY = "//div[@class='calendar-day ']"
-READ_HTML_MATCH = 'Country'
+XPATH = "//div[@class='calendar-day ']"
+READ_HTML_MATCH_PARAM = 'Country'
 
 # Exluded urls
 EXLUDED_URLS_PATH = os.path.join(RESOURCE_DIR, 'excluded_urls.csv')

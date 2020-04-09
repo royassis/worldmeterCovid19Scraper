@@ -22,7 +22,7 @@ def handle_first_time():
 def timeout_get_request(browser, timeout = 50):
     """Set timeout for response from site"""
     try:
-        WebDriverWait(browser, timeout).until(EC.visibility_of_element_located((By.XPATH, TIMEOUT_ENTITY)))
+        WebDriverWait(browser, timeout).until(EC.visibility_of_element_located((By.XPATH, XPATH)))
     except TimeoutException:
         logger.info("Timed out waiting for page to load")
         browser.quit()
@@ -39,7 +39,7 @@ def download_csv_from_all_urls(new_refs):
 
         try:
             # TODO match=
-            container = pd.read_html(ref, match=READ_HTML_MATCH)
+            container = pd.read_html(ref, match=READ_HTML_MATCH_PARAM)
             df = container[-1]
             df['ref'] = ref
 
