@@ -3,6 +3,7 @@ import os
 from selenium import webdriver
 import logging.config
 from datetime import date
+import configparser
 
 # Paths and Dirs
 OUTPUT_PATH = r'D:\PycharmProjects\scrap_corona_history\DW\raw_data\worldmeter'
@@ -35,3 +36,7 @@ logger.handlers[0].setLevel(VERBOSE_LEVEL)
 # Date
 todays_date = date.today().strftime("%Y%m%d")
 
+config = configparser.ConfigParser()
+config.read(CONFIG_PATH)
+first_time_bit = config['bin']['key']
+first_time_bit = int(first_time_bit)

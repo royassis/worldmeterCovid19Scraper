@@ -1,6 +1,9 @@
 from ETL_scripts.extract_worldmeter.utils.functions import *
 from selenium import webdriver
 
+# Validate
+handle_first_time()
+
 # create a new instance of Chrome
 logger.info('>>Opening chromium in background')
 browser = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH, options=options)

@@ -10,6 +10,14 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 
+def handle_first_time():
+    files = os.listdir(OUTPUT_PATH)
+    if len(files)!=0 and first_time_bit == 0:
+        raise Exception('Dir is not empty')
+    else:
+        config['bin']['key'] = '1'
+        with open(CONFIG_PATH, 'w') as configfile:
+            config.write(configfile)
 
 def timeout_get_request(browser, timeout = 50):
     """Set timeout for response from site"""
