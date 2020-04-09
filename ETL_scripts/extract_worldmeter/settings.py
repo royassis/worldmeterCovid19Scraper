@@ -5,10 +5,6 @@ import logging.config
 from datetime import date
 
 # Paths and Dirs
-DATA_DIR = 'raw_data'
-LOG_DIR = 'logs'
-RESOURCE_DIR = 'resources'
-
 OUTPUT_PATH = r'D:\PycharmProjects\scrap_corona_history\DW\raw_data\worldmeter'
 
 SITE_URL = 'https://www.worldometers.info/coronavirus/'
@@ -30,8 +26,13 @@ with open(EXLUDED_URLS_PATH) as f:
     excluded_urls = f.read().splitlines()
 
 # Start logger
-VERBOSE_LEVEL = logging.INFO
-logging.basicConfig(level=VERBOSE_LEVEL)
+LOG_CONFIG_PATH = r"ETL_scripts/extract_worldmeter/resources/"
+LOG_FILENAME = "logger.conf"
+os.chmod(LOG_CONFIG_PATH, 0o777)
+VERBOSE_LEVEL = 'INFO'
+logging.config.fileConfig(fname=LOG_CONFIG_PATH, disable_existing_loggers=True)
+logger = logging.getLogger('errorLogger')
+logger.handlers[1].setLevel(VERBOSE_LEVEL)
 
 # Date
 todays_date = date.today().strftime("%Y%m%d")
