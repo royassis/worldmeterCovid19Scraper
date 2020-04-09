@@ -16,7 +16,7 @@ def timeout_get_request(browser, timeout = 50):
     try:
         WebDriverWait(browser, timeout).until(EC.visibility_of_element_located((By.XPATH, "//div[@class='calendar-day ']")))
     except TimeoutException:
-        logging.info("Timed out waiting for page to load")
+        logger.info("Timed out waiting for page to load")
         browser.quit()
 
 
@@ -26,7 +26,7 @@ def download_csv_from_all_urls(new_refs):
 
     for i, ref in enumerate(new_refs):
 
-        logging.info(f'Downloading file {i + 1} from {urls_len}: {ref}')
+        logger.info(f'Downloading file {i + 1} from {urls_len}: {ref}')
 
         try:
             # TODO match=
@@ -44,7 +44,7 @@ def download_csv_from_all_urls(new_refs):
             outpath = os.path.join(OUTPUT_PATH, outfile)
             df.to_csv(outpath)
         except:
-            logging.error(f'There have been a problem with {ref}')
+            logger.error(f'There have been a problem with {ref}')
 
 
 def get_all_urls_matching_regex(browser, url_pattern):
