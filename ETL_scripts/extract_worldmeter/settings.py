@@ -1,7 +1,7 @@
 # Imports
 import os
 from selenium import webdriver
-import logging.config
+import logging
 from datetime import date
 
 # Paths and Dirs
@@ -26,13 +26,8 @@ with open(EXLUDED_URLS_PATH) as f:
     excluded_urls = f.read().splitlines()
 
 # Start logger
-LOG_CONFIG_PATH = r"ETL_scripts/extract_worldmeter/resources/"
-LOG_FILENAME = "logger.conf"
-os.chmod(LOG_CONFIG_PATH, 0o777)
-VERBOSE_LEVEL = 'INFO'
-logging.config.fileConfig(fname=LOG_CONFIG_PATH, disable_existing_loggers=True)
-logger = logging.getLogger('errorLogger')
-logger.handlers[1].setLevel(VERBOSE_LEVEL)
+VERBOSE_LEVEL = logging.INFO
+logging.basicConfig(level=VERBOSE_LEVEL)
 
 # Date
 todays_date = date.today().strftime("%Y%m%d")
