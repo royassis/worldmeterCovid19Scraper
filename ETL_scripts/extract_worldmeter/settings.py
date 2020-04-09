@@ -27,10 +27,10 @@ with open(EXLUDED_URLS_PATH) as f:
 
 # Start logger
 CONFIG_PATH = os.path.join(RESOURCE_DIR, 'logger.conf')
-# VERBOSE_LEVEL = logging.INFO
-# logging.basicConfig(level=VERBOSE_LEVEL)
+VERBOSE_LEVEL = 'INFO'
 logging.config.fileConfig(fname=CONFIG_PATH, disable_existing_loggers=False)
-
+logger = logging.getLogger('errorLogger')
+logger.handlers[0].setLevel(VERBOSE_LEVEL)
 
 # Date
 todays_date = date.today().strftime("%Y%m%d")
