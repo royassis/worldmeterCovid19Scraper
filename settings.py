@@ -18,7 +18,7 @@ GOVERNMENT_RESPONSE_URL = urls.loc[4,'url']
 
 POPULATION_CSV_PATH = os.path.join(current_dir,'DW/raw_data/population_data.csv')
 
-GOV_DATE_RESULTS_DIR = os.path.join(current_dir,'DW/loaded_data','all_dates.csv')
+GOV_DATE_RESULTS_DIR = os.path.join(current_dir,'DW/raw_data/gov_data')
 RESULTS_PATH = os.path.join(GOV_DATE_RESULTS_DIR,'all_dates.csv')
 RESULTS_PATH_SEIR = os.path.join(GOV_DATE_RESULTS_DIR,'all_dates_seir.csv')
 
