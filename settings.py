@@ -17,3 +17,5 @@ POPULATION_CSV_PATH = r'D:\PycharmProjects\scrap_corona_history\DW\raw_data\popu
 
 RESULTS_PATH_SEIR = r'D:\PycharmProjects\scrap_corona_history\DW\loaded_data\all_dates_seir.csv'
 RESULTS_PATH = r'D:\PycharmProjects\scrap_corona_history\DW\loaded_data\all_dates.csv'
+
+GOV_DATE_PATH = r'D:\PycharmProjects\scrap_corona_history\DW\raw_data\gov_data'
