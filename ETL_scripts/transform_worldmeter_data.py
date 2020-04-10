@@ -75,15 +75,16 @@ def main():
     all_data['I'] = all_data['activecases']
     all_data['R'] = all_data['total_recovered'] + all_data['total_deaths']
 
-    output_cols = ['S', 'E', 'I', 'R', 'country', 'date']
-    all_data = all_data[output_cols]
-
     all_data = all_data.merge(response_data, on =['date','country'], how = 'left')
+
+    output_cols = ['S', 'E', 'I', 'R', 'country', 'date']
+    all_data_seir = all_data[output_cols]
     # --------------------
     # # Output to file
     # --------------------
     all_data.to_csv(RESULTS_PATH)
-    return (all_data)
+    all_data_seir.to_csv(RESULTS_PATH_SEIR)
+    return (all_data,all_data_seir)
 
 
 if __name__ == '__main__':
